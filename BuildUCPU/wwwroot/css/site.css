@@ -1,22 +1,62 @@
-html {
-  font-size: 14px;
+header {
+    font-size: 1rem;
+    padding: 1rem 0;
+    background-color: #0056b3;
+    color: white;
+    border-bottom: none;
+    margin-top: 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    header a {
+        color: white;
+        text-decoration: none;
+        padding: 1rem 2rem;
+        margin: 0 50px; /* margines */
+    }
+
+    header .navbar-brand {
+        margin-right: 10px;
+    }
+
+.navbar-collapse {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.navbar {
+    background-color: #0056b3;
+    padding: 1rem;
+    color: white;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+    .navbar .navbar-toggler {
+        background-color: #0056b3;
+    }
+
+    .navbar .navbar-toggler-icon {
+        background-color: #fff;
+    }
+
+footer {
+    font-size: 1rem;
+    padding: 1rem;
+    background-color: #0056b3;
+    color: white;
+    border-bottom: 1px solid #e7e7e7;
+    margin-top: 0;
 }
 
-body {
-  margin-bottom: 60px;
+.footer a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
 }
+
+    .footer a:hover {
+        text-decoration: none;
+    }
