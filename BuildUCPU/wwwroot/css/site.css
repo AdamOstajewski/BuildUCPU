@@ -1,6 +1,6 @@
 header {
     font-size: 1rem;
-    padding: 1rem 0;
+    padding: 0rem 0;
     background-color: #0056b3;
     color: white;
     border-bottom: none;
@@ -15,11 +15,10 @@ header {
         color: white;
         text-decoration: none;
         padding: 1rem 2rem;
-        margin: 0 50px; /* margines */
     }
 
     header .navbar-brand {
-        margin-right: 10px;
+        margin-right: 0px;
     }
 
 .navbar-collapse {
@@ -30,7 +29,7 @@ header {
 
 .navbar {
     background-color: #0056b3;
-    padding: 1rem;
+    padding: 0rem;
     color: white;
 }
 
@@ -60,3 +59,12 @@ footer {
     .footer a:hover {
         text-decoration: none;
     }
+
+
+.nav-item-margin .nav-link {
+    margin-right: 105px; 
+}
+
+
+
+

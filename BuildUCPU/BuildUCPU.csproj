@@ -19,6 +19,12 @@
 
   <ItemGroup>
     <Content Remove="Views\Components\List.cshtml" />
+    <Content Remove="Views\News.cshtml" />
+    <Content Remove="Views\News\News.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\1.png" />
   </ItemGroup>
 
 </Project>
