@@ -18,20 +18,6 @@
             flex-direction: column;
         }
 
-        /* Tło strony */
-        .background-image {
-            position: absolute;
-            top: 90px; /* Pozycja od góry */
-            left: 0;
-            width: 100%;
-            height: 50vh;
-            background-image: url('/images/1.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            z-index: -1;
-        }
-
         .navbar {
             background-color: rgba(0, 86, 179, 1);
         }
@@ -107,13 +93,7 @@
     </style>
 </head>
 
-<body class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index" ? "homepage" : "")">
-    <!-- Tło strony -->
-    @if (ViewContext.RouteData.Values["controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["action"]?.ToString() == "Index")
-    {
-        <div class="background-image"></div>
-    }
-
+<body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom" style="min-width: 100%;">
             <div class="container-fluid">
