@@ -17,6 +17,9 @@
             color: #333;
             position: relative;
             height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .background-img {
@@ -29,9 +32,10 @@
             object-fit: cover;
         }
 
+
         .header {
             text-align: center;
-            padding: 20px;
+            padding: 10px;
             background-color: rgba(255, 255, 255, 0.8);
         }
 
@@ -59,7 +63,7 @@
                 border: none;
                 cursor: pointer;
                 border-radius: 5px;
-            }
+			}
 
                 .start-button button:hover {
                     background-color: rgba(0, 86, 179, 1);
@@ -67,7 +71,7 @@
 
         .subheader {
             text-align: center;
-            margin: 20px 0;
+            margin-top: 225px;
         }
 
             .subheader h2 {
@@ -80,17 +84,17 @@
             flex-wrap: wrap;
             justify-content: space-around;
             padding: 20px;
-            margin-top: 105px;
+            margin-top: -20px; /* Możesz dostosować ten margines */
         }
 
         .feature {
             background-color: rgba(0, 86, 179, 1);
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
+            padding: 5px; /* Zmniejszenie paddingu */
             margin: 10px;
-            flex: 1 1 200px;
-            max-width: 300px;
+            flex: 1 1 150px; /* Zmniejszenie flex-basis */
+            max-width: 300px; /* Zmniejszenie max-width */
             text-align: center;
             color: white;
         }
@@ -118,6 +122,7 @@
                 .feature button:hover {
                     background-color: #c05800;
                 }
+
     </style>
 </head>
 <body>
