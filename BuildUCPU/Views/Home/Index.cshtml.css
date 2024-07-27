@@ -1,0 +1,113 @@
+﻿namespace BuildUCPU.Views.Home
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.background-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+}
+
+
+.header {
+    text-align: center;
+    padding: 10px;
+}
+
+    .header h1 {
+        margin: 0px;
+        font-size: 2.6em;
+        color: white;
+    }
+
+    .header p {
+        margin: 3px 0 20px;
+        font-size: 1.8em;
+        color: #f76c00;
+    }
+
+.start-button {
+    text-align: center;
+    margin: 200px 0;
+}
+
+    .start-button button {
+        background-color: rgba(0, 86, 179, 1);
+        color: white;
+        padding: 15px 30px;
+        font-size: 1em;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+        .start-button button:hover {
+            background-color: rgba(0, 86, 179, 1);
+        }
+
+.subheader {
+    text-align: center;
+    margin-top: -180px;
+}
+
+    .subheader h2 {
+        font-size: 1.9em;
+        color: #333;
+    }
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+    margin-top: -25px; /* Możesz dostosować ten margines */
+}
+
+.feature {
+    background-color: rgba(0, 86, 179, 1);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 5px; /* Zmniejszenie paddingu */
+    margin: 10px;
+    flex: 1 1 150px; /* Zmniejszenie flex-basis */
+    max-width: 300px; /* Zmniejszenie max-width */
+    text-align: center;
+    color: white;
+}
+
+    .feature h3 {
+        color: white;
+    }
+
+    .feature p {
+        font-size: 0.9em;
+        line-height: 1.4em;
+    }
+
+    .feature button {
+        background-color: #f76c00;
+        color: white;
+        padding: 10px 20px;
+        font-size: 1em;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+        .feature button:hover {
+            background-color: #c05800;
+        }
