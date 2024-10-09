@@ -8,6 +8,7 @@
       "sslPort": 44314
     }
   },
+  "DefaultConnection": "Server=localhost;Database=builducpu1;User=root;SslMode=none;",
   "profiles": {
     "http": {
       "commandName": "Project",

@@ -1,0 +1,276 @@
+﻿@model IEnumerable<BuildUCPU.GotoweZestawy>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Nasze propozycje gotowych zestawów komputerowych</h1>
+
+<select id="categorySelect" onchange="showSelectedCategory()">
+    <option value="">Wybierz kategorię</option>
+    <option value="Gry">Gry</option>
+    <option value="Programowanie">Programowanie</option>
+    <option value="Grafika">Grafika i Projektowanie</option>
+    <option value="Biuro">Biuro</option>
+    <option value="Dom">Dom</option>
+</select>
+
+<div class="category-container">
+    <!-- Nowy kontener -->
+    <div class="category Gry">
+        <div class="spec-section">
+            <div class="spec-info">
+                <p>
+                    CPU: Ryzen 5 5600<br>
+                    GPU: RX 6600/RTX4060<br>
+                    Motherboard: B550M DS3H<br>
+                    RAM: GOODRAM 16GB<br>
+                    SSD: SN580 1TB<br>
+                    PSU: DEEPCOOL PK550D<br>
+                    CASE: COOLER MASTER Q300L V2<br>
+                    Fan: -<br>
+                </p>
+            </div>
+            <div class="spec-image">
+                <img src="~/images/PCGRY1.png" alt="PC1" />
+            </div>
+        </div>
+        <hr style="height: 3px; background-color:#4A90E2" />
+        <div class="spec-section">
+            <div class="spec-info">
+                <p>
+                    CPU:Ryzen 5 5600/i5-12GEN<br>
+                    GPU:RTX 4060/Droższa alternatywa 7700xt<br>
+                    Motherboard:B550M Aorus/B660M PRO<br>
+                    RAM:GOODRAM IRDM 32GB<br>
+                    SSD:KINGSTON KC3000/KC600<br>
+                    PSU:EVGA/CORSAIR/COOLERMASTER GOLD<br>
+                    Case:COOLERMASTER Q300L v2/Fractal Tg CLEAR 429/NZXT<br>
+                    Fan:ENDORFY Fera/be queit!/
+                </p>
+            </div>
+            <div class="spec-image">
+                <img src="~/images/PCGRY1.png" alt="PC1" />
+            </div>
+        </div>
+        <hr style="height: 3px; background-color:#4A90E2" />
+        <div class="spec-section">
+            <div class="spec-info">
+                <p>
+                    CPU:Ryzen 7 7800<br>
+                    GPU:rx 7700/4070Ti<br>
+                    MOTHERBOARD:B650 EAGLE<br>
+                    RAM:GOODRAM IRDM BLACK/TRIDENT Z5<br>
+                    SSD:Kingston KC600/KC3000<br>
+                    PSU:EVGA/COOLERMASTER GOLD<br>
+                    Case:Corsair<br>
+                    Fan:Noctua
+                </p>
+            </div>
+            <div class="spec-image">
+                <img src="~/images/PCGRY1.png" alt="PC1" />
+            </div>
+        </div>
+        <hr style="height: 3px; background-color:#4A90E2" />
+        <div class="spec-section">
+            <div class="spec-info">
+                <p>
+                    CPU:i9 14Gen<br>
+                    GPU:RTX 4090<br>
+                    Motherboard:ROG Z790<br>
+                    RAM:Kingston RENEGADE<br>
+                    SSD:KINGSTON KC3000/KC600<br>
+                    PSU:Corsair PK550D<br>
+                    Case:Fractal Meshify<br>
+                    Fan:Endorfy NAVIS/Corsair iCUE
+                </p>
+            </div>
+            <div class="spec-image">
+                <img src="~/images/PCGRY1.png" alt="PC1" />
+            </div>
+        </div>
+    </div>
+
+    <div class="category Programowanie">
+        <div class="spec-section">
+            <div class="spec-info">
+                <p>
+                    CPU:Ryzen 7 7800 <br>
+                    GPU:- <br>
+                    Mothaerboard:B650M <br>
+                    RAM:GOODRAM IRDM black <br>
+                    SSD:WD SN580/KC600 <br>
+                    PSU:DEEPCOOL PK550D/Corsair CX650 <br>
+                    Case:COOLER MASTER Q300 <br>
+                    Fan:Be quiet!
+                </p>
+            </div>
+            <div class="spec-image">
+                <img src="~/images/PCGRY1.png" alt="PC1" />
+            </div>
+        </div>
+        </div>
+ 
+        <div class="category Grafika">
+            <div class="spec-section">
+                <div class="spec-info">
+                    <p>
+                    CPU:Ryzen 5 7600<br>
+                    GPU:RTX 4060<br>
+                    Motherboard:B650M/B650<br>
+                    RAM:GOODRAM IRDM BLACK/Trident Z5<br>
+                    SSD:Kingston KC3000<br>
+                    PSU:COOLERMASTER GOLD v2<br>
+                    Case:NZXT/Fractal<br>
+                    Fan:ENDORFY/Be quiet<br>
+                    </p>
+                </div>
+                <div class="spec-image">
+                    <img src="~/images/PCGRY1.png" alt="PC1" />
+                </div>
+            </div>
+        <hr style="height: 3px; background-color:#4A90E2" />
+        <div class="spec-section">
+            <div class="spec-info">
+                <p>
+                    CPU:Ryzen 7 7800X3D<br>
+                    GPU:RTX 4070Ti<br>
+                    Motherboard:B650M/B650<br>
+                    RAM:GOODRAM IRDM BLACK/Trident Z5<br>
+                    SSD:Samsung 990 PRO<br>
+                    PSU:EVGA<br>
+                    Case:Corsair<br>
+                    Fan:Noctua
+                </p>
+            </div>
+            <div class="spec-image">
+                <img src="~/images/PCGRY1.png" alt="PC1" />
+            </div>
+        </div>
+            </div>
+    <div class="category Biuro">
+        <div class="spec-section">
+            <div class="spec-info">
+                <p>
+                    CPU:Ryzen 5 5600<br>
+                    GPU:-<br>
+                    Motherboard:B550M Aorus/B550M DS3H<br>
+                    RAM:GOODRAM 16GB<br>
+                    SSD:WD SN580<br>
+                    PSU:DEEPCOOL PK550D/COOLERMASTER BRONZE v2<br>
+                    Case:COOLERMASTER Q300/Fractal TG clear<br>
+                    Fan:-
+                </p>
+            </div>
+            <div class="spec-image">
+                <img src="~/images/PCGRY1.png" alt="PC1" />
+            </div>
+        </div>
+    </div>
+    <div class="category Dom">
+        <div class="spec-section">
+            <div class="spec-info">
+                <p>
+                    CPU:i3 12Gen<br>
+                    GPU:rx 6600<br>
+                    Motherboard:B660M<br>
+                    RAM:GOODRAM 16GB<br>
+                    SSD:WD SN580<br>
+                    PSU:DEEPCOOL PK550D/COOLERMASTER BRONZE v2<br>
+                    Case:COOLERMASTER Q300<br>
+                    Fan:Endorfy Fera 5
+                </p>
+            </div>
+            <div class="spec-image">
+                <img src="~/images/PCGRY1.png" alt="PC1" />
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function showSelectedCategory() {
+        // Pobierz wartość wybranej kategorii
+        var selectedCategory = document.getElementById("categorySelect").value;
+
+        // Ukryj wszystkie sekcje
+        var categories = document.querySelectorAll('.category');
+        categories.forEach(function (category) {
+            category.style.display = 'none';
+        });
+
+        // Pokaż tylko wybraną sekcję
+        if (selectedCategory) {
+            var selectedElement = document.querySelector('.' + selectedCategory);
+            if (selectedElement) {
+                selectedElement.style.display = 'block';
+            }
+        }
+    }
+</script>
+<!-- <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Sekcja)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Chlodzenie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DyskiTwarde)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KartyGraficzne)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Obudowy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PamieciRam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlytyGlowne)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Procesory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Zasilacze)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sekcja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Chlodzenie.Nr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DyskiTwarde.Nr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KartyGraficzne.Nr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Obudowy.Nr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PamieciRam.Nr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlytyGlowne.Nr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Procesory.Nr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zasilacze.Nr)
+            </td>
+        </tr>
+}
+    </tbody>
+</table> --->

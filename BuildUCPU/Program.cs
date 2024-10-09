@@ -1,8 +1,18 @@
+using BuildUCPU;
+using BuildUCPU.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// Dodaj konfiguracjê bazy danych tutaj
+builder.Services.AddDbContext<Builducpu1Context>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+        new MySqlServerVersion(new Version(8, 0, 21))
+    )
+);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,3 +35,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+

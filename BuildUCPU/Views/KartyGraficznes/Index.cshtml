@@ -1,0 +1,72 @@
+﻿@model IEnumerable<BuildUCPU.KartyGraficzne>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Karty Graficzne</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Producent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cena)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Wydajnosc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kompatybilnosc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dostepnosc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gwarancja)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DodatkoweFunkcje)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wydajnosc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kompatybilnosc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dostepnosc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gwarancja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DodatkoweFunkcje)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<a href="/Components">Powrót</a>

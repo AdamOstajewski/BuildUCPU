@@ -1,0 +1,136 @@
+﻿body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    color: #4A90E2;
+    margin-bottom: 20px;
+}
+
+
+/* Styl dla dropdown */
+select {
+    margin-left:42%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+    select:hover {
+        border-color: #45a049;
+    }
+
+    select:focus {
+        outline: none;
+        border-color: #45a049;
+        box-shadow: 0 0 10px rgba(0, 150, 50, 0.5);
+    }
+
+/* Styl dla kontenera sekcji z kategoriami */
+.category-container {
+    margin-left:20%;
+    display: flex; /* Ustawienie kontenera jako flexbox */
+    flex-wrap: wrap; /* Umożliwienie zawijania elementów */
+    justify-content: flex-start; /* Wyrównanie elementów do lewej */
+    
+}
+
+/* Styl dla sekcji kategorii */
+.category {
+    flex: 0 0 calc(50% - 20px); /* Ustal szerokość sekcji (50% z marginesem) */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 10px; /* Odstęp między sekcjami */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Domyślnie ukryte */
+}
+
+
+/* Dodaj clearfix, aby rozwiązać problem z opływaniem */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.spec-section {
+    
+    display: flex; /* Ustawienie kontenera jako flexbox */
+    align-items: center; /* Wyrównanie elementów w pionie */
+    margin-bottom: 100px; /* Odstęp między sekcjami */
+}
+
+.spec-info {
+    
+    flex: 1; /* Zajmuje dostępne miejsce */
+    margin-right: 20px; /* Odstęp między tekstem a obrazkiem */
+}
+
+
+.spec-image {
+    flex-shrink: 0; /* Zapobiega kurczeniu się obrazka */
+}
+
+    .spec-image img {
+        max-width: 100px; /* Ustal maksymalną szerokość obrazka */
+        height: auto; /* Utrzymaj proporcje obrazka */
+        border-radius: 8px; /* Opcjonalne zaokrąglenie rogów obrazka */
+    }
+
+.category p {
+    font-weight:bold;
+    white-space:nowrap; /*zeby nie zawijało napisów*/
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* Animacja pojawiania się kategorii */
+.category.show {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Styl dla lepszego layoutu na małych ekranach */
+@media (max-width: 768px) {
+    .category {
+        padding: 15px;
+    }
+
+    select {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .category p {
+        font-size: 14px;
+    }
+}

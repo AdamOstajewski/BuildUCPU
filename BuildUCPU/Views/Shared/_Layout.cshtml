@@ -58,13 +58,11 @@
         .nav-link {
             color: white !important;
             margin-right: 15px;
-            font-size: 1.6em;
         }
 
         .nav-but1 {
             display: flex;
             flex-direction: column;
-            font-size: 0.8em;
         }
 
             .nav-but1 .nav-link {
@@ -72,7 +70,7 @@
                 color: white;
                 border: 1px solid #FD7900;
                 border-radius: 20px; /* Zwiększenie promienia zaokrąglenia */
-                padding: 5px 20px;
+                padding: 10px 20px;
                 margin: 5px 0;
                 text-align: center;
                 transition: background-color 0.3s, color 0.3s;
@@ -101,21 +99,12 @@
             flex: 1; /* Zajmuje dostępne miejsce */
         }
 
-        .container1 {
-            flex: 1; /* Zajmuje dostępne miejsce */
-            font-size: 1.6em;
-            margin-left: 100px;
-            gap: 50px;
-        }
-
         footer {
             position: relative;
             bottom: 0;
             width: 100%;
             padding: 30px 0; /* Dodaje pionowy margines wewnętrzny */
         }
-
-
 
         /* Nowy CSS dla ikon społecznościowych */
         .social-footer {
@@ -193,7 +182,7 @@
                             <a class="nav-link" asp-area="" asp-controller="Comparison" asp-action="Index">Porównanie</a>
                         </li>
                         <li class="nav-item nav-item-margin">
-                            <a class="nav-link" asp-area="" asp-controller="ReadySets" asp-action="Index">Gotowe Zestawy</a>
+                            <a class="nav-link" asp-area="" asp-controller="GotoweZestawies" asp-action="Index">Gotowe Zestawy</a>
                         </li>
                         <li class="nav-but1">
                             <a class="nav-link" asp-area="" asp-controller="Contact" asp-action="Index">Kontakt</a>
@@ -212,7 +201,7 @@
 
     <!-- Footer -->
     <footer class="border-top footer text-muted">
-        <div class="container1">
+        <div class="container">
             <a asp-area="" asp-controller="About" asp-action="Index">O nas</a>
             <a asp-area="" asp-controller="PrivacyPolicy" asp-action="Index">Polityka Prywatności</a>
             <a asp-area="" asp-controller="TermsOfService" asp-action="Index">Regulamin</a>
