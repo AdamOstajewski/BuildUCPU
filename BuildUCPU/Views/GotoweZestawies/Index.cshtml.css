@@ -19,10 +19,10 @@ h1 {
 
 /* Styl dla dropdown */
 select {
-    margin-left: 42%;
+    margin-left:42%;
     padding: 10px;
     font-size: 16px;
-    border: 2px solid #4A90E2;
+    border: 2px solid #4CAF50;
     border-radius: 5px;
     background-color: #fff;
     color: #333;
@@ -31,13 +31,13 @@ select {
 }
 
     select:hover {
-        border-color: #4A90E2;
+        border-color: #45a049;
     }
 
     select:focus {
         outline: none;
-        border-color: #4A90E2;
-        box-shadow: 0 0 10px #4A90E2;
+        border-color: #45a049;
+        box-shadow: 0 0 10px rgba(0, 150, 50, 0.5);
     }
 
 /* Styl dla kontenera sekcji z kategoriami */

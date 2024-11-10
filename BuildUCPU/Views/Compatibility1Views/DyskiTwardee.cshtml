@@ -1,10 +1,10 @@
-﻿@model IEnumerable<BuildUCPU.PamieciRam>
+﻿@model IEnumerable<BuildUCPU.DyskiTwarde>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Pamieci RAM</h1>
+<h1>Dyski Twarde</h1>
 
 
 <table class="table">
@@ -25,18 +25,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Kompatybilnosc)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Dostepnosc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gwarancja)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DodatkoweFunkcje)
-            </th>
-            <th style="display:none">
-                @Html.DisplayNameFor(model => model.KompatybilnoscNavigation.Id)
-            </th>
+
             <th></th>
         </tr>
     </thead>
@@ -59,21 +48,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Kompatybilnosc)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dostepnosc)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Gwarancja)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DodatkoweFunkcje)
-                </td>
-                <td style="display:none">
-                    @Html.DisplayFor(modelItem => item.KompatybilnoscNavigation.Id)
-                </td>
+
             </tr>
-}
+        }
     </tbody>
 </table>
+
 
 <a href="/Components">Powrót</a>

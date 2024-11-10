@@ -1,0 +1,218 @@
+﻿@{
+    ViewData["Title"] = "Kompatybilność";
+}
+
+<style>
+    th, td {
+        text-align: left;
+        vertical-align: middle;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-collapse: collapse;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .content-container {
+        margin-top: 20px;
+    }
+
+    .alert {
+        padding: 15px;
+        margin: 10px 0;
+        border: 1px solid transparent;
+        border-radius: .25rem;
+    }
+
+    .alert-info {
+        color: #0c5460;
+        background-color: #d1ecf1;
+        border-color: #bee5eb;
+    }
+
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+
+    .hidden-column {
+        display: none;
+    }
+</style>
+
+<h2>Skomponuj swój własny zestaw</h2>
+<p>Na tej stronie sprawdzisz czy Twój skonfigurowany komputer jest kompatybilny</p>
+
+<a id="chlodzenia-button" href="javascript:void(0)">Chłodzenia</a>
+<div id="chlodzenia-container" class="container" style="display:none;"></div>
+
+<a id="dyskiTwarde-button" href="javascript:void(0)">Dyski Twarde</a>
+<div id="dyskiTwarde-container" class="container" style="display:none;"></div>
+
+<a id="kartyGraficzne-button" href="javascript:void(0)">Karty Graficzne</a>
+<div id="kartyGraficzne-container" class="container" style="display:none;"></div>
+
+<a id="obudowy-button" href="javascript:void(0)">Obudowy</a>
+<div id="obudowy-container" class="container" style="display:none;"></div>
+
+<a id="ramy-button" href="javascript:void(0)">RAM-y</a>
+<div id="ramy-container" class="container" style="display:none;"></div>
+
+<a id="plytyGlowne-button" href="javascript:void(0)">Płyty Główne</a>
+<div id="plytyGlowne-container" class="container" style="display:none;"></div>
+
+<a id="procesory-button" href="javascript:void(0)">Procesory</a>
+<div id="procesory-container" class="container" style="display:none;"></div>
+
+<a id="zasilacze-button" href="javascript:void(0)">Zasilacze</a>
+<div id="zasilacze-container" class="container" style="display:none;"></div>
+
+<!-- Kontener dla wyświetlania zawartości -->
+<div class="content-container">
+    <button id="check-button" style="display:none; margin-top: 20px;">Sprawdzam</button>
+    <div id="selected-items-container"></div>
+    <p id="compatibility-message" style="font-weight: bold; margin-top: 20px; display:none;"></p> <!-- Komunikat o kompatybilności -->
+    <button id="summary-button" style="display:none; margin-top: 20px;">Podsumuj</button> <!-- Przycisk "Podsumuj" -->
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function loadTable(buttonId, containerId, url) {
+                $(buttonId).click(function () {
+                    if ($(containerId).is(':visible')) {
+                        $(containerId).slideUp();
+                    } else {
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            success: function (data) {
+                                var tempDiv = $('<div>').html(data);
+                                var table = tempDiv.find('table');
+
+                                // Zmiana nagłówków tabeli
+                                table.find('thead tr').html(`
+                                            <th>Wybierz</th>
+                                            <th>Producent</th>
+                                            <th>Model</th>
+                                            <th>Cena</th>
+                                            <th class="hidden-column">ID</th> <!-- Ukryta kolumna z ID -->
+                                        `);
+
+                                // Iteracja przez wiersze, aby wstawić przyciski wyboru i zachować ID w data-id
+                                table.find('tbody tr').each(function () {
+                                    var tds = $(this).find('td');
+                                    $(this).html(`
+                                                <td><input type="radio" name="component${buttonId}" class="row-radio" data-id="${tds.eq(8).html()}"></td>
+                                                <td>${tds.eq(0).html()}</td> <!-- Producent -->
+                                                <td>${tds.eq(1).html()}</td> <!-- Model -->
+                                                <td>${tds.eq(2).html()} zł</td> <!-- Cena -->
+                                                <td class="hidden-column">${tds.eq(8).html()} </td> <!-- Ukryte ID -->
+                                            `);
+                                });
+
+                                $(containerId).html(table);
+                                $(containerId).slideDown();
+
+                                // Przewijanie strony do tabeli
+                                $('html, body').animate({
+                                    scrollTop: $(containerId).offset().top - 100
+                                }, 500);
+                            },
+                            error: function () {
+                                alert('Wystąpił problem podczas ładowania danych.');
+                            }
+                        });
+                    }
+                });
+            }
+
+            // Funkcja obsługująca kliknięcie na radio buttons
+            function checkRadioButtons() {
+                var selectedCount = $('input[type="radio"]:checked').length;
+
+                // Pokaż przycisk "Sprawdzam" tylko wtedy, gdy dokładnie 8 komponentów zostało wybranych
+                if (selectedCount === 8) {
+                    $('#check-button').show();
+                } else {
+                    $('#check-button').hide();
+                }
+            }
+
+            // Sprawdzanie zaznaczonych opcji
+            $(document).on('change', 'input[type="radio"]', function () {
+                checkRadioButtons();
+            });
+
+            // Wybór komponentów i zapisanie ich ID
+            $('#check-button').click(function () {
+                var selectedIds = [];
+                $('input[type="radio"]:checked').each(function () {
+                    var row = $(this).closest('tr');
+                    selectedIds.push(row.find('td').eq(4).text().trim()); // Zbieranie ID
+                });
+
+                if (selectedIds.length > 0) {
+                    // Sprawdzenie, czy wszystkie ID są takie same
+                    var firstId = selectedIds[0];
+                    var allCompatible = selectedIds.every(function (id) {
+                        return id === firstId;
+                    });
+
+                    // Wyświetl odpowiedni komunikat o kompatybilności
+                    if (allCompatible) {
+                        $('#compatibility-message').text("Podzespoły są ze sobą kompatybilne").css("color", "green").show();
+                        $('#summary-button').show(); // Pokazujemy przycisk "Podsumuj"
+                    } else {
+                        $('#compatibility-message').text("Podzespoły nie są ze sobą kompatybilne").css("color", "red").show();
+                    }
+                } else {
+                    alert("Nie wybrano żadnych podzespołów.");
+                }
+            });
+
+            // Załaduj dane dla każdej kategorii
+            loadTable('#chlodzenia-button', '#chlodzenia-container', '@Url.Action("Index", "Chlodzenies")');
+            loadTable('#dyskiTwarde-button', '#dyskiTwarde-container', '@Url.Action("Index", "DyskiTwardes")');
+            loadTable('#kartyGraficzne-button', '#kartyGraficzne-container', '@Url.Action("Index", "KartyGraficznes")');
+            loadTable('#obudowy-button', '#obudowy-container', '@Url.Action("Index", "Obudowies")');
+            loadTable('#ramy-button', '#ramy-container', '@Url.Action("Index", "PamieciRams")');
+            loadTable('#plytyGlowne-button', '#plytyGlowne-container', '@Url.Action("Index", "PlytyGlownes")');
+            loadTable('#procesory-button', '#procesory-container', '@Url.Action("Index", "Procesories")');
+            loadTable('#zasilacze-button', '#zasilacze-container', '@Url.Action("Index", "Zasilaczes")');
+
+            // Funkcja na przycisk "Podsumuj"
+            $('#summary-button').click(function () {
+                var selectedRows = [];
+                $('input[type="radio"]:checked').each(function () {
+                    var row = $(this).closest('tr');
+                    selectedRows.push(row);
+                });
+
+                // Jeśli zaznaczone zostały 8 wierszy
+                if (selectedRows.length === 8) {
+                    // Zbieramy dane o wybranych komponentach (Producent, Model, Cena)
+                    var componentData = selectedRows.map(function (row) {
+                        return row.find('td').slice(1, 4).text().trim(); // Zbieranie danych z komórek (Producent, Model, Cena)
+                    }).join(';'); // Łączenie danych w jeden ciąg
+
+                    // Przekierowanie do strony z parametrami w URL
+                    window.location.href = '/Compatibility?data=' + encodeURIComponent(componentData);
+                } else {
+                    alert("Musisz wybrać dokładnie 8 podzespołów.");
+                }
+            });
+        });
+    </script>
+}

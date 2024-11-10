@@ -1,0 +1,76 @@
+﻿
+
+/* Główne okno kontaktowe */
+.contact-container {
+    margin: auto;
+    background: #ffffff;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+    .contact-container h1 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .contact-container p {
+        font-size: 16px;
+        margin-bottom: 20px;
+        color: #666;
+    }
+
+    /* Styl pola formularza */
+    .contact-container input, .contact-container textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #333;
+    }
+
+    /* Styl przycisku wysyłania */
+    .contact-container button {
+        background: #f76c00;
+        color: #ffffff;
+        border: none;
+        padding: 12px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+        .contact-container button:hover {
+            background: #f76c00;
+        }
+
+/* Dodatkowe informacje kontaktowe */
+.contact-details {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #777;
+}
+
+    .contact-details p {
+        margin: 5px 0;
+    }
+
+    /* Styl linków kontaktowych */
+    .contact-details a {
+        color: #f76c00;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+        .contact-details a:hover {
+            color: #2575fc;
+        }

@@ -1,5 +1,32 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona Kontaktowa</title>
+</head>
+<body>
+
+    <div class="contact-container">
+        <h1>Skontaktuj się z nami</h1>
+        <p>Masz pytania? Wypełnij poniższy formularz, a skontaktujemy się z Tobą wkrótce!</p>
+
+        <!-- Formularz kontaktowy -->
+        <form>
+            <input type="text" name="name" placeholder="Imię i nazwisko" required>
+            <input type="email" name="email" placeholder="Adres e-mail" required>
+            <textarea name="message" placeholder="Twoja wiadomość" rows="5" required></textarea>
+            <button type="submit">Wyślij wiadomość</button>
+        </form>
+
+        <!-- Dane kontaktowe -->
+        <div class="contact-details">
+            <p>Adres: ul. Przykładowa 123, 62-100 Wągrowiec</p>
+            <p>Telefon: <a href="tel:+48123456789">+48 123 456 789</a></p>
+            <p>Email: <a href="mailto:kontakt@przyklad.com">builducpuzespol@gmail.com</a></p>
+        </div>
+    </div>
+
+</body>
+</html>
+

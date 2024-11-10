@@ -2,5 +2,81 @@
     ViewData["Title"] = "Kompatybilność";
 }
 
-<h2>Kompatybilność</h2>
-<p>Informacje na temat kompatybilności podzespołów.</p>
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kompatybilność</title>
+    <link rel="stylesheet" href="~/css/styles.css">
+    <style>
+        th, td {
+            text-align: left;
+            vertical-align: middle;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-collapse: collapse;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .start-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .start-button-link {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .start-button-link:hover {
+            background-color: #45a049;
+        }
+
+        .selected-items-table th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>Oto Twój skonfigurowany i gotowy komputer który składa sie z tych dobrze dobranych do siebie podzespołów:</h2>
+
+    @if (ViewBag.SelectedComponents != null && ViewBag.SelectedComponents.Length > 0)
+    {
+        <table class="selected-items-table">
+            <thead>
+                <tr>
+                    <th>Wybrane Podzespoły</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var components = string.Join(",", ViewBag.SelectedComponents).Split(';');
+                }
+
+                @foreach (var component in components)
+                {
+                    if (!string.IsNullOrWhiteSpace(component))
+                    {
+                        <tr>
+                            <td>@Html.Raw(component.Trim())</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+
+    <div class="start-button">
+        <a href="@Url.Action("Index", "Home")" class="start-button-link">Przejdź do strony głównej</a>
+    </div>
+</body>
+</html>

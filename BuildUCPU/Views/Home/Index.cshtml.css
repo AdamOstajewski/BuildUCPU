@@ -1,7 +1,4 @@
-﻿namespace BuildUCPU.Views.Home 
- 
-
-Body{
+﻿body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -23,7 +20,6 @@ Body{
     object-fit: cover;
 }
 
-
 .header {
     text-align: center;
     padding: 10px;
@@ -44,27 +40,28 @@ Body{
 .start-button {
     text-align: center;
     margin: 20px 0;
-    margin-top: 15%;
-    margin-bottom: -10%;
+    margin-top: 10%; /* Zmniejszono margines górny */
 }
 
     .start-button button {
         background-color: rgba(0, 86, 179, 1);
         color: white;
-        padding: 15px 30px;
-        font-size: 1em;
+        padding: 10px 20px; /* Zmniejszono padding */
+        font-size: 1em; /* Zmniejszono rozmiar czcionki */
         border: none;
         cursor: pointer;
         border-radius: 5px;
+        transition: background-color 0.3s, transform 0.3s; /* Dodano animacje */
     }
 
         .start-button button:hover {
-            background-color: rgba(0, 86, 179, 1);
+            background-color: rgba(0, 66, 139, 1); /* Zmiana koloru po najechaniu */
         }
+
 
 .subheader {
     text-align: center;
-    margin-top: 170px;
+    margin-top: 20px; /* Dostosowano margines dolny */
 }
 
     .subheader h2 {
@@ -77,18 +74,17 @@ Body{
     flex-wrap: wrap;
     justify-content: space-around;
     padding: 20px;
-    margin-top: -30px; /* Możesz dostosować ten margines */
-    margin-bottom: 100px;
+    margin-top: 20px; /* Dostosowano margines */
 }
 
 .feature {
     background-color: rgba(0, 86, 179, 1);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 5px; /* Zmniejszenie paddingu */
+    padding: 10px; /* Dostosowano padding */
     margin: 10px;
-    flex: 1 1 150px; /* Zmniejszenie flex-basis */
-    max-width: 300px; /* Zmniejszenie max-width */
+    flex: 1 1 150px; /* Dostosowano rozmiar */
+    max-width: 300px; /* Dostosowano rozmiar */
     text-align: center;
     color: white;
 }
@@ -117,5 +113,3 @@ Body{
         .feature a:hover {
             background-color: #c05800;
         }
-
-

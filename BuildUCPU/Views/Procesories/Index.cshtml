@@ -34,6 +34,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.DodatkoweFunkcje)
             </th>
+            <th style="display:none">
+                @Html.DisplayNameFor(model => model.KompatybilnoscNavigation.Id)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -64,6 +67,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DodatkoweFunkcje)
             </td>
+                <td style="display:none">
+                    @Html.DisplayFor(modelItem => item.KompatybilnoscNavigation.Id)
+                </td>
         </tr>
 }
     </tbody>

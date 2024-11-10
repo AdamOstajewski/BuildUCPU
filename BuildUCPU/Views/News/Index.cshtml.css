@@ -46,13 +46,12 @@ nav {
     padding: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-    
+
 
 .news-item {
     margin-bottom: 20px;
     padding-bottom: 10px;
     border-bottom: 1px solid #ddd;
-    
 }
 
 
@@ -63,7 +62,6 @@ nav {
 
     .news-item p {
         margin: 10px 0;
-    
     }
 
 
@@ -73,11 +71,11 @@ nav {
     border-bottom: 1px solid #ddd;
 }
 
-.news-item1 h2 {
-    color: #333;
-    margin-bottom: 20px;
-}
+    .news-item1 h2 {
+        color: #333;
+        margin-bottom: 20px;
+    }
 
-.news-item1 p {
-    margin: 10px 0;
-}
+    .news-item1 p {
+        margin: 10px 0;
+    }

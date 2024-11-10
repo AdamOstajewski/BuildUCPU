@@ -1,6 +1,9 @@
 using BuildUCPU.Models;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 using System.Diagnostics;
+
+using MailKit.Net.Smtp;
 
 namespace BuildUCPU.Controllers
 {
@@ -28,5 +31,6 @@ namespace BuildUCPU.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

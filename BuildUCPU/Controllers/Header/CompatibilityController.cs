@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace BuildUCPU.Controllers.Header
+namespace BuildUCPU.Controllers
 {
     public class CompatibilityController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index(string data)
         {
+            // Przekaż dane do widoku
+            ViewBag.SelectedComponents = data?.Split(',') ?? new string[0]; // Przekazuje jako tablicę
             return View();
         }
     }
