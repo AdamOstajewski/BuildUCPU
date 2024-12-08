@@ -1,6 +1,253 @@
-﻿@{
-    ViewData["Title"] = "Porównanie";
-}
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Porównanie podzespołów</title>
+    <style>
+        .comparison-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
 
-<h2>Porównanie</h2>
-<p>Funkcjonalność do porównywania  podzespołów.</p>
+        .comparison-column {
+            width: 40%;
+            background-color: #0056b3; /* Jaśniejszy odcień niebieskiego */
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .details-container {
+            margin-top: 20px;
+            background-color: #0056b3;
+            color: black;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+            .details-container table {
+                background-color: #0056b3; /* Bardzo jasny niebieski */
+                color: white; /* Tekst w kolorze czarnym */
+                border-collapse: collapse; /* Ładniejsze granice */
+            }
+
+        h2 {
+            text-align: center;
+        }
+
+        select {
+            width: 100%;
+            margin-top: 10px;
+            background-color: white; /* Białe wnętrze */
+            color: black; /* Tekst w kolorze czarnym */
+            border-radius: 5px; /* Zaokrąglone rogi */
+            padding: 5px; /* Dodanie odstępu dla czytelności */
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .vs-text {
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h2>Porównanie podzespołów</h2>
+
+    <div class="comparison-container">
+        <div class="comparison-column">
+            <label for="category1">Kategoria</label>
+            <select id="category1">
+                <option value="">Wybierz kategorię</option>
+            </select>
+
+            <label for="component1">Podzespół</label>
+            <select id="component1">
+                <option value="">Wybierz podzespół</option>
+            </select>
+
+            <div id="details1" class="details-container">
+                <!-- Szczegóły podzespołu zostaną załadowane tutaj -->
+            </div>
+        </div>
+
+        <div class="vs-text">VS</div>
+
+        <div class="comparison-column">
+            <label for="category2">Kategoria</label>
+            <select id="category2">
+                <option value="">Wybierz kategorię</option>
+            </select>
+
+            <label for="component2">Podzespół</label>
+            <select id="component2">
+                <option value="">Wybierz podzespół</option>
+            </select>
+
+            <div id="details2" class="details-container">
+                <!-- Szczegóły podzespołu zostaną załadowane tutaj -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const categories = [
+            { id: 1, name: 'Procesory' },
+            { id: 2, name: 'Płyty Główne' },
+            { id: 3, name: 'Karty Graficzne' },
+            { id: 4, name: 'Chłodzenie' },
+            { id: 5, name: 'Dyski SSD' },
+            { id: 6, name: 'Obudowy' },
+            { id: 7, name: 'Ramy' },
+            { id: 8, name: 'Zasilacze' }
+        ];
+
+        const components = {
+            1: [
+                { id: 101, name: 'Intel i3-12100F', producer: 'Intel', model: 'i3-12100F', price: '369 zł', performance: '4 rdzeni, 3.3-4.3 GHz	', compatibility: 'Socket 1700' },
+                { id: 102, name: 'AMD Ryzen 5 5600G', producer: 'AMD', model: 'Ryzen 5 5600G', price: '569 zł', performance: '6 rdzeni, 3.9-4.4 GHz', compatibility: 'AM4' },
+                { id: 103, name: 'AMD Ryzen 5 5600', producer: 'AMD', model: 'Ryzen 5 5600', price: '519 zł', performance: '6 rdzeni, 3.5-4.4 GHz', compatibility: 'AM4' },
+                { id: 104, name: 'Intel i5-12400F', producer: 'Intel', model: 'i5-12400F', price: '509 zł', performance: '6 rdzeni, 2.5-4.4 GHz', compatibility: 'Socket 1700' },
+                { id: 105, name: 'AMD Ryzen 5 7600', producer: 'AMD', model: 'Ryzen 5 7600', price: '879 zł', performance: '6 rdzeni, 3.8-5.1 GHz', compatibility: 'AM5' },
+                { id: 106, name: 'AMD Ryzen 7 7800X3D', producer: 'AMD', model: 'Ryzen 7 7800X3D', price: '1599 zł', performance: '8 rdzeni, 4.2-5.0 GHz', compatibility: 'AM5' },
+                { id: 107, name: 'Intel i9-14900K', producer: 'Intel', model: 'i9-14900K', price: '2799 zł', performance: '24 rdzeni, 3.2-6.0 GHz', compatibility: 'Socket 1700' }
+            ],
+            2: [
+                { id: 201, name: 'Gigabyte B550M AORUS ELITE', producer: 'Gigabyte', model: 'B550M AORUS ELITE', price: '479 zł', performance: 'mATX', compatibility: 'AM4, DDR4' },
+                { id: 202, name: 'Gigabyte B550M DS3H', producer: 'Gigabyte', model: 'B550M DS3H', price: '403 zł', performance: 'mATX', compatibility: 'AM4, DDR4' },
+                { id: 203, name: 'ASRock B650M-HDV/M.2', producer: 'ASRock', model: 'B650M-HDV/M.2', price: '517 zł', performance: 'mATX', compatibility: 'AM5, DDR5' },
+                { id: 204, name: 'Gigabyte B650 EAGLE AX', producer: 'Gigabyte', model: 'B650 EAGLE AX', price: '739 zł', performance: 'mATX', compatibility: 'AM5, DDR5' },
+                { id: 205, name: 'ASUS ROG MAXIMUS Z790', producer: 'ASUS', model: 'ROG MAXIMUS Z790', price: '3305 zł', performance: 'ATX', compatibility: 'Socket 1700, DDR5' },
+                { id: 206, name: 'ASRock B660M Pro RS', producer: 'ASRock', model: 'B660M Pro RS', price: '511 zł', performance: 'mATX', compatibility: 'Socket 1700, DDR4' }
+            ],
+            3: [
+                { id: 301, name: 'AMD Gigabyte Radeon RX 6600 EAGLE', producer: 'AMD', model: 'RX 6600 EAGLE', price: '979 zł', performance: '8GB VRAM, 2491 MHz', compatibility: 'PCIe 4.0' },
+                { id: 302, name: 'NVIDIA MSI RTX 4090 SUPRIM X', producer: 'NVIDIA', model: 'RTX 4090 SUPRIM X', price: '8699 zł', performance: '24GB VRAM, 2520 MHz', compatibility: 'PCIe 4.0' },
+                { id: 303, name: 'NVIDIA MSI RTX 4060 Ventus 2X', producer: 'NVIDIA', model: 'RTX 4060 Ventus 2X', price: '1269 zł', performance: '8GB VRAM, 2490 MHz', compatibility: 'PCIe 4.0' },
+                { id: 304, name: 'AMD Gigabyte RX 7700 XT Gaming', producer: 'AMD', model: 'RX 7700 XT Gaming', price: '2529 zł', performance: '12GB VRAM, 2276 MHz', compatibility: 'PCIe 4.0' },
+                { id: 305, name: 'NVIDIA Gigabyte GeForce RTX 4070 Ti EAGLE', producer: 'NVIDIA', model: 'RTX 4070 Ti EAGLE', price: '3299 zł', performance: '12GB VRAM, 2625 MHz', compatibility: 'PCIe 4.0' }
+            ],
+            4: [
+                { id: 401, name: 'ENDORFY Fera 5 Black', producer: 'ENDORFY', model: 'Fera 5 Black', price: '149 zł', performance: '250 - 1800 obr./min', compatibility: 'AM5,AM4,AM3+,AM2+,FM2+,FM1' },
+                { id: 402, name: 'be quiet! Shadow Rock 3', producer: 'be quiet!', model: 'Shadow Rock 3', price: '245 zł', performance: 'do 1600 obr./min', compatibility: 'AM5,AM4' },
+                { id: 403, name: 'Corsair iCUE H115i', producer: 'Corsair', model: 'iCUE H115i', price: '729 zł', performance: '252 - 1800 obr./min', compatibility: 'AM5,AM4,sTR4,sTRX4' },
+                { id: 404, name: 'Noctua NH-D15', producer: 'Noctua', model: 'NH-D15', price: '499 zł', performance: '300 - 1500 obr./min', compatibility: 'AM5,AM4,AM3+,AM2+,FM2+' },
+                { id: 405, name: 'ENDORFY Navis F280', producer: 'ENDORFY', model: 'Navis F280', price: '559 zł', performance: '250 - 1800 obr./min', compatibility: 'AM5,AM4' }
+            ],
+            5: [
+     { id: 501, name: 'WD SN580 1TB', producer: 'WD', model: 'SN580 1TB', price: '295 zł', performance: '4150 MB/s, 4150 MB/s', compatibility: 'PCIe NVMe 4.0 x4' },
+     { id: 502, name: 'Kingston KC3000 2TB', producer: 'Kingston', model: 'KC3000 2TB', price: '679 zł', performance: '7000 MB/s, 7000 MB/s', compatibility: 'PCIe NVMe 4.0 x4' },
+     { id: 503, name: 'Seagate FireCuda 530 1TB', producer: 'Seagate', model: 'FireCuda 530', price: '489 zł', performance: '7300 MB/s, 6000 MB/s', compatibility: 'PCIe NVMe 4.0 x4' },
+     { id: 504, name: 'Kingston KC600 1TB', producer: 'Kingston', model: 'KC600', price: '449 zł', performance: '550 MB/s, 520 MB/s', compatibility: 'PCIe NVMe 4.0 x4' },
+     { id: 505, name: 'Samsung 990 Pro 4TB', producer: 'Samsung', model: '990 Pro 4TB', price: '1999 zł', performance: '7450 MB/s, 6900 MB/s', compatibility: 'PCIe NVMe 4.0 x4' }
+ ],
+ 6: [
+     { id: 601, name: 'Cooler Master Q300L V2', producer: 'Cooler Master', model: 'Q300L V2', price: '329 zł', performance: 'microATX Mini-ITX', compatibility: 'Mini Tower' },
+     { id: 602, name: 'NZXT H5 FLOW', producer: 'NZXT', model: 'H5 FLOW', price: '569 zł', performance: 'ATX, microATX, Mini-ITX', compatibility: 'Middle Tower' },
+     { id: 603, name: 'Corsair 7000D', producer: 'Corsair', model: '7000D', price: '999 zł', performance: 'ATX, Mini-ITX', compatibility: 'Full Tower' },
+     { id: 604, name: 'Fractal TG Clear Tint', producer: 'Fractal', model: 'TG Clear Tint', price: '429 zł', performance: 'ATX, m-ATX, Mini-ITX', compatibility: 'Middle Tower' },
+     { id: 605, name: 'Fractal Meshify 2', producer: 'Fractal', model: 'Meshify 2', price: '1049 zł', performance: 'ATX, m-ATX, Mini-ITX, EATX, EEATX, SSI CEB, SSI EEB, Mini-ITX', compatibility: 'Full Tower' }
+ ],
+ 7: [
+     { id: 701, name: 'GOODRAM PRO Deep Black', producer: 'GOODRAM', model: 'PRO Deep Black', price: '190 zł', performance: '16GB, 3600 MHz', compatibility: 'DDR4, dual channel' },
+     { id: 702, name: 'GOODRAM IRDM', producer: 'GOODRAM', model: 'IRDM', price: '309 zł', performance: '32GB, 3200 MHz', compatibility: 'DDR4, dual channel' },
+     { id: 703, name: 'GOODRAM IRDM BLACK V SILVER', producer: 'GOODRAM', model: 'IRDM BLACK V SILVER', price: '549 zł', performance: '32GB, 6400 MHz', compatibility: 'DDR5, dual channel' },
+     { id: 704, name: 'G.SKILL Trident Z5 RGB', producer: 'G.SKILL', model: 'Trident Z5 RGB', price: '619 zł', performance: '32GB, 6400 MHz', compatibility: 'DDR5, dual channel' },
+     { id: 705, name: 'Kingston Renegade RGB', producer: 'Kingston', model: 'Renegade RGB', price: '1059 zł', performance: '32GB, 7200 MHz', compatibility: 'DDR5, dual channel' }
+ ],
+ 8: [
+     { id: 801, name: 'Deepcool PK550D', producer: 'Deepcool', model: 'PK550D', price: '219 zł', performance: '550 W, 80+ Bronze', compatibility: 'ATX' },
+     { id: 802, name: 'Corsair CX650', producer: 'Corsair', model: 'CX650', price: '289 zł', performance: '650 W, 80+ Bronze', compatibility: 'ATX' },
+     { id: 803, name: 'EVGA SuperNOVA', producer: 'EVGA', model: 'SuperNOVA', price: '649 zł', performance: '750 W, 80+ Gold', compatibility: 'ATX, modular' },
+     { id: 804, name: 'Corsair PK550D', producer: 'Corsair', model: 'PK550D', price: '939 zł', performance: '1000 W, 80+ Gold', compatibility: 'ATX 3.0, modular' },
+     { id: 805, name: 'Cooler Master MWE BRONZE V2', producer: 'Cooler Master', model: 'MWE BRONZE V2', price: '269 zł', performance: '550 W, 80+ Bronze', compatibility: 'ATX, modular' },
+     { id: 806, name: 'Cooler Master MWE GOLD-V2', producer: 'Cooler Master', model: 'MWE GOLD-V2', price: '449 zł', performance: '750 W, 80+ Gold', compatibility: 'ATX, modular' }
+ ]
+        };
+
+        // Ładowanie kategorii
+        function loadCategories(selector) {
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.name;
+                selector.appendChild(option);
+            });
+        }
+
+        // Ładowanie podzespołów na podstawie wybranej kategorii
+        function loadComponents(categorySelector, componentSelector, detailsContainer) {
+            categorySelector.addEventListener('change', () => {
+                const categoryId = categorySelector.value;
+                componentSelector.innerHTML = '<option value="">Wybierz podzespół</option>';
+                detailsContainer.innerHTML = '';
+
+                if (components[categoryId]) {
+                    components[categoryId].forEach(component => {
+                        const option = document.createElement('option');
+                        option.value = component.id;
+                        option.textContent = component.name;
+                        componentSelector.appendChild(option);
+                    });
+                }
+            });
+
+            componentSelector.addEventListener('change', () => {
+                const componentId = componentSelector.value;
+                const categoryId = categorySelector.value;
+                const component = components[categoryId]?.find(c => c.id == componentId);
+
+                if (component) {
+                    detailsContainer.innerHTML = `
+                        <table>
+                            <tr><th>Producent</th><td>${component.producer}</td></tr>
+                            <tr><th>Model</th><td>${component.model}</td></tr>
+                            <tr><th>Cena</th><td>${component.price}</td></tr>
+                            <tr><th>Wydajność</th><td>${component.performance}</td></tr>
+                            <tr><th>Kompatybilność</th><td>${component.compatibility}</td></tr>
+                        </table>
+                    `;
+                }
+            });
+        }
+
+        // Synchronizacja wybranej kategorii między oboma menu
+        function syncCategories(sourceSelector, targetSelector) {
+            sourceSelector.addEventListener('change', () => {
+                targetSelector.value = sourceSelector.value;
+                targetSelector.dispatchEvent(new Event('change'));
+            });
+        }
+
+        // Inicjalizacja
+        document.addEventListener('DOMContentLoaded', () => {
+            const category1 = document.getElementById('category1');
+            const category2 = document.getElementById('category2');
+            const component1 = document.getElementById('component1');
+            const component2 = document.getElementById('component2');
+            const details1 = document.getElementById('details1');
+            const details2 = document.getElementById('details2');
+
+            loadCategories(category1);
+            loadCategories(category2);
+
+            loadComponents(category1, component1, details1);
+            loadComponents(category2, component2, details2);
+
+            // Synchronizacja między kategoriami
+            syncCategories(category1, category2);
+            syncCategories(category2, category1);
+        });
+    </script>
+</body>
+</html>
+

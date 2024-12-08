@@ -75,6 +75,7 @@
     justify-content: space-around;
     padding: 20px;
     margin-top: 20px; /* Dostosowano margines */
+    margin-bottom:100px;
 }
 
 .feature {

@@ -16,6 +16,10 @@
         margin-top: 20px;
     }
 
+    th {
+        cursor: pointer;
+    }
+
     .content-container {
         margin-top: 20px;
     }
@@ -48,8 +52,11 @@
     .hidden-column {
         display: none;
     }
-</style>
 
+    .sort-icon {
+        margin-left: 5px;
+    }
+</style>
 <h2>Skomponuj swój własny zestaw</h2>
 <p>Na tej stronie sprawdzisz czy Twój skonfigurowany komputer jest kompatybilny</p>
 
@@ -77,18 +84,63 @@
 <a id="zasilacze-button" href="javascript:void(0)">Zasilacze</a>
 <div id="zasilacze-container" class="container" style="display:none;"></div>
 
-<!-- Kontener dla wyświetlania zawartości -->
 <div class="content-container">
     <button id="check-button" style="display:none; margin-top: 20px;">Sprawdzam</button>
     <div id="selected-items-container"></div>
-    <p id="compatibility-message" style="font-weight: bold; margin-top: 20px; display:none;"></p> <!-- Komunikat o kompatybilności -->
-    <button id="summary-button" style="display:none; margin-top: 20px;">Podsumuj</button> <!-- Przycisk "Podsumuj" -->
+    <p id="compatibility-message" style="font-weight: bold; margin-top: 20px; display:none;"></p>
+    <button id="summary-button" style="display:none; margin-top: 20px;">Podsumuj</button>
 </div>
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            var currentSortColumn = '';
+            var isAscending = true;
+
+            function sortTable(table, columnIndex, isNumeric) {
+                var rows = table.find('tbody tr').get();
+                rows.sort(function (a, b) {
+                    var A = $(a).children('td').eq(columnIndex).text();
+                    var B = $(b).children('td').eq(columnIndex).text();
+
+                    if (isNumeric) {
+                        A = parseFloat(A.replace('zł', '').replace(',', '.')) || 0;
+                        B = parseFloat(B.replace('zł', '').replace(',', '.')) || 0;
+                    }
+
+                    if (A < B) return isAscending ? -1 : 1;
+                    if (A > B) return isAscending ? 1 : -1;
+                    return 0;
+                });
+
+                $.each(rows, function (index, row) {
+                    table.children('tbody').append(row);
+                });
+            }
+
+            function updateSortIcons(table, columnIndex) {
+                table.find('th .sort-icon').remove();
+                var icon = isAscending ? '▲' : '▼';
+                table.find('th').eq(columnIndex).append(`<span class="sort-icon">${icon}</span>`);
+            }
+
+            $(document).on('click', 'th', function () {
+                var table = $(this).closest('table');
+                var columnIndex = $(this).index();
+                var isNumeric = $(this).text().toLowerCase() === 'cena';
+
+                if (currentSortColumn === columnIndex) {
+                    isAscending = !isAscending;
+                } else {
+                    currentSortColumn = columnIndex;
+                    isAscending = true;
+                }
+
+                sortTable(table, columnIndex, isNumeric);
+                updateSortIcons(table, columnIndex);
+            });
+
             function loadTable(buttonId, containerId, url) {
                 $(buttonId).click(function () {
                     if ($(containerId).is(':visible')) {
@@ -101,31 +153,38 @@
                                 var tempDiv = $('<div>').html(data);
                                 var table = tempDiv.find('table');
 
-                                // Zmiana nagłówków tabeli
+                                if (table.length === 0) {
+                                    console.error("Brak tabeli w odpowiedzi AJAX.");
+                                    return;
+                                }
+
+                                var columnCount = table.find('thead tr th').length;
+                                if (columnCount < 9) {
+                                    alert("Dane wejściowe mają nieprawidłowy format.");
+                                    return;
+                                }
+
                                 table.find('thead tr').html(`
                                             <th>Wybierz</th>
                                             <th>Producent</th>
                                             <th>Model</th>
                                             <th>Cena</th>
-                                            <th class="hidden-column">ID</th> <!-- Ukryta kolumna z ID -->
+                                            <th class="hidden-column">ID</th>
                                         `);
 
-                                // Iteracja przez wiersze, aby wstawić przyciski wyboru i zachować ID w data-id
                                 table.find('tbody tr').each(function () {
                                     var tds = $(this).find('td');
                                     $(this).html(`
                                                 <td><input type="radio" name="component${buttonId}" class="row-radio" data-id="${tds.eq(8).html()}"></td>
-                                                <td>${tds.eq(0).html()}</td> <!-- Producent -->
-                                                <td>${tds.eq(1).html()}</td> <!-- Model -->
-                                                <td>${tds.eq(2).html()} zł</td> <!-- Cena -->
-                                                <td class="hidden-column">${tds.eq(8).html()} </td> <!-- Ukryte ID -->
+                                                <td>${tds.eq(0).html()}</td>
+                                                <td>${tds.eq(1).html()}</td>
+                                                <td>${tds.eq(2).html()} zł</td>
+                                                <td class="hidden-column">${tds.eq(8).html()}</td>
                                             `);
                                 });
 
                                 $(containerId).html(table);
                                 $(containerId).slideDown();
-
-                                // Przewijanie strony do tabeli
                                 $('html, body').animate({
                                     scrollTop: $(containerId).offset().top - 100
                                 }, 500);
@@ -138,11 +197,8 @@
                 });
             }
 
-            // Funkcja obsługująca kliknięcie na radio buttons
             function checkRadioButtons() {
                 var selectedCount = $('input[type="radio"]:checked').length;
-
-                // Pokaż przycisk "Sprawdzam" tylko wtedy, gdy dokładnie 8 komponentów zostało wybranych
                 if (selectedCount === 8) {
                     $('#check-button').show();
                 } else {
@@ -150,30 +206,26 @@
                 }
             }
 
-            // Sprawdzanie zaznaczonych opcji
             $(document).on('change', 'input[type="radio"]', function () {
                 checkRadioButtons();
             });
 
-            // Wybór komponentów i zapisanie ich ID
             $('#check-button').click(function () {
                 var selectedIds = [];
                 $('input[type="radio"]:checked').each(function () {
                     var row = $(this).closest('tr');
-                    selectedIds.push(row.find('td').eq(4).text().trim()); // Zbieranie ID
+                    selectedIds.push(row.find('td').eq(4).text().trim());
                 });
 
                 if (selectedIds.length > 0) {
-                    // Sprawdzenie, czy wszystkie ID są takie same
                     var firstId = selectedIds[0];
                     var allCompatible = selectedIds.every(function (id) {
                         return id === firstId;
                     });
 
-                    // Wyświetl odpowiedni komunikat o kompatybilności
                     if (allCompatible) {
                         $('#compatibility-message').text("Podzespoły są ze sobą kompatybilne").css("color", "green").show();
-                        $('#summary-button').show(); // Pokazujemy przycisk "Podsumuj"
+                        $('#summary-button').show();
                     } else {
                         $('#compatibility-message').text("Podzespoły nie są ze sobą kompatybilne").css("color", "red").show();
                     }
@@ -182,7 +234,90 @@
                 }
             });
 
-            // Załaduj dane dla każdej kategorii
+            $('#summary-button').click(function () {
+                var selectedRows = [];
+                $('input[type="radio"]:checked').each(function () {
+                    var row = $(this).closest('tr');
+                    selectedRows.push(row);
+                });
+
+                if (selectedRows.length === 8) {
+                    generateSummaryTable(selectedRows);
+                } else {
+                    alert("Musisz wybrać dokładnie 8 podzespołów.");
+                }
+            });
+
+            function generateSummaryTable(selectedRows) {
+                var summaryContainer = $('<div class="summary-container" style="margin-top: 20px;margin-bottom:100px;"></div>');
+
+                // Obliczenie sumy
+                var totalCost = 0;
+                selectedRows.forEach(function (row) {
+                    var priceText = row.find('td').eq(3).text().trim();
+                    var price = parseFloat(priceText.replace('zł', '').replace(',', '.')) || 0;
+                    totalCost += price;
+                });
+
+                // Tworzenie HTML podsumowania
+                var tableHtml = `
+                        <h3>Podsumowanie Wybranych Podzespołów</h3>
+
+                        <table style="width: 100%; border: 1px solid #ddd; border-collapse: collapse;">
+                            <thead>
+                                <tr>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Producent</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Model</th>
+                                    <th style="padding: 8px; border: 1px solid #ddd;">Cena</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+
+                selectedRows.forEach(function (row) {
+                    var manufacturer = row.find('td').eq(1).text().trim();
+                    var model = row.find('td').eq(2).text().trim();
+                    var priceText = row.find('td').eq(3).text().trim();
+                    var price = parseFloat(priceText.replace('zł', '').replace(',', '.')) || 0;
+
+                    tableHtml += `
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${manufacturer}</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${model}</td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">${price.toFixed(2)} zł</td>
+                            </tr>
+                        `;
+                });
+
+                tableHtml += `
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" style="text-align: right; font-weight: bold; padding: 8px; border: 1px solid #ddd;">Łączna cena:</td>
+                                    <td style="text-align: right; font-weight: bold; padding: 8px; border: 1px solid #ddd;">${totalCost.toFixed(2)} zł</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    `;
+
+                // Dodanie 10x <br> po tabeli
+                tableHtml += `<div style="margin-top: 20px;">`;
+                for (var i = 0; i < 10; i++) {
+                    tableHtml += `<br>`;
+                }
+                tableHtml += `</div>`;
+
+                summaryContainer.html(tableHtml);
+
+                // Dodanie kontenera do DOM
+                $('#summary-container').remove();
+                $('body').append(summaryContainer);
+
+                $('html, body').animate({
+                    scrollTop: summaryContainer.offset().top - 100
+                }, 500);
+            };
+
             loadTable('#chlodzenia-button', '#chlodzenia-container', '@Url.Action("Index", "Chlodzenies")');
             loadTable('#dyskiTwarde-button', '#dyskiTwarde-container', '@Url.Action("Index", "DyskiTwardes")');
             loadTable('#kartyGraficzne-button', '#kartyGraficzne-container', '@Url.Action("Index", "KartyGraficznes")');
@@ -191,28 +326,9 @@
             loadTable('#plytyGlowne-button', '#plytyGlowne-container', '@Url.Action("Index", "PlytyGlownes")');
             loadTable('#procesory-button', '#procesory-container', '@Url.Action("Index", "Procesories")');
             loadTable('#zasilacze-button', '#zasilacze-container', '@Url.Action("Index", "Zasilaczes")');
-
-            // Funkcja na przycisk "Podsumuj"
-            $('#summary-button').click(function () {
-                var selectedRows = [];
-                $('input[type="radio"]:checked').each(function () {
-                    var row = $(this).closest('tr');
-                    selectedRows.push(row);
-                });
-
-                // Jeśli zaznaczone zostały 8 wierszy
-                if (selectedRows.length === 8) {
-                    // Zbieramy dane o wybranych komponentach (Producent, Model, Cena)
-                    var componentData = selectedRows.map(function (row) {
-                        return row.find('td').slice(1, 4).text().trim(); // Zbieranie danych z komórek (Producent, Model, Cena)
-                    }).join(';'); // Łączenie danych w jeden ciąg
-
-                    // Przekierowanie do strony z parametrami w URL
-                    window.location.href = '/Compatibility?data=' + encodeURIComponent(componentData);
-                } else {
-                    alert("Musisz wybrać dokładnie 8 podzespołów.");
-                }
-            });
         });
+
     </script>
+
 }
+

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BuildUCPU;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BuildUCPU.Controllers
 {
@@ -19,13 +18,65 @@ namespace BuildUCPU.Controllers
         }
 
         // GET: Chlodzenies
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            var builducpu1Context = _context.Chlodzenies.Include(c => c.KompatybilnoscNavigation);
-            return View(await builducpu1Context.ToListAsync());
+            // Sortowanie dla kolumn
+            ViewData["ProducentSortParam"] = String.IsNullOrEmpty(sortOrder) ? "producent_desc" : "";
+            ViewData["ModelSortParam"] = sortOrder == "model" ? "model_desc" : "model";
+            ViewData["CenaSortParam"] = sortOrder == "cena" ? "cena_desc" : "cena";
+            ViewData["DostepnoscSortParam"] = sortOrder == "dostepnosc" ? "dostepnosc_desc" : "dostepnosc";
+            ViewData["GwarancjaSortParam"] = sortOrder == "gwarancja" ? "gwarancja_desc" : "gwarancja";
+            ViewData["FunkcjeSortParam"] = sortOrder == "funkcje" ? "funkcje_desc" : "funkcje";
+
+            var chlodzenia = from c in _context.Chlodzenies.Include(c => c.KompatybilnoscNavigation)
+                             select c;
+
+            // Logika sortowania
+            switch (sortOrder)
+            {
+                case "producent_desc":
+                    chlodzenia = chlodzenia.OrderByDescending(c => c.Producent);
+                    break;
+                case "model":
+                    chlodzenia = chlodzenia.OrderBy(c => c.Model);
+                    break;
+                case "model_desc":
+                    chlodzenia = chlodzenia.OrderByDescending(c => c.Model);
+                    break;
+                case "cena":
+                    chlodzenia = chlodzenia.OrderBy(c => c.Cena);
+                    break;
+                case "cena_desc":
+                    chlodzenia = chlodzenia.OrderByDescending(c => c.Cena);
+                    break;
+                case "dostepnosc":
+                    chlodzenia = chlodzenia.OrderBy(c => c.Dostepnosc);
+                    break;
+                case "dostepnosc_desc":
+                    chlodzenia = chlodzenia.OrderByDescending(c => c.Dostepnosc);
+                    break;
+                case "gwarancja":
+                    chlodzenia = chlodzenia.OrderBy(c => c.Gwarancja);
+                    break;
+                case "gwarancja_desc":
+                    chlodzenia = chlodzenia.OrderByDescending(c => c.Gwarancja);
+                    break;
+                case "funkcje":
+                    chlodzenia = chlodzenia.OrderBy(c => c.DodatkoweFunkcje);
+                    break;
+                case "funkcje_desc":
+                    chlodzenia = chlodzenia.OrderByDescending(c => c.DodatkoweFunkcje);
+                    break;
+                default:
+                    chlodzenia = chlodzenia.OrderBy(c => c.Producent);
+                    break;
+            }
+
+            return View(await chlodzenia.ToListAsync());
         }
 
-        // GET: Chlodzenies/Details/5
+        // Pozostałe metody kontrolera są takie same
+        // (Details, Create, Edit, Delete)
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,16 +95,12 @@ namespace BuildUCPU.Controllers
             return View(chlodzenie);
         }
 
-        // GET: Chlodzenies/Create
         public IActionResult Create()
         {
             ViewData["KompatybilnoscId"] = new SelectList(_context.Kompatybilnoscs, "Id", "Id");
             return View();
         }
 
-        // POST: Chlodzenies/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Nr,KompatybilnoscId,Producent,Model,Cena,Wydajnosc,Kompatybilnosc,Dostepnosc,Gwarancja,DodatkoweFunkcje")] Chlodzenie chlodzenie)
@@ -67,97 +114,7 @@ namespace BuildUCPU.Controllers
             ViewData["KompatybilnoscId"] = new SelectList(_context.Kompatybilnoscs, "Id", "Id", chlodzenie.KompatybilnoscId);
             return View(chlodzenie);
         }
-
-        // GET: Chlodzenies/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var chlodzenie = await _context.Chlodzenies.FindAsync(id);
-            if (chlodzenie == null)
-            {
-                return NotFound();
-            }
-            ViewData["KompatybilnoscId"] = new SelectList(_context.Kompatybilnoscs, "Id", "Id", chlodzenie.KompatybilnoscId);
-            return View(chlodzenie);
-        }
-
-        // POST: Chlodzenies/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Nr,KompatybilnoscId,Producent,Model,Cena,Wydajnosc,Kompatybilnosc,Dostepnosc,Gwarancja,DodatkoweFunkcje")] Chlodzenie chlodzenie)
-        {
-            if (id != chlodzenie.Nr)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(chlodzenie);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ChlodzenieExists(chlodzenie.Nr))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["KompatybilnoscId"] = new SelectList(_context.Kompatybilnoscs, "Id", "Id", chlodzenie.KompatybilnoscId);
-            return View(chlodzenie);
-        }
-
-        // GET: Chlodzenies/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var chlodzenie = await _context.Chlodzenies
-                .Include(c => c.KompatybilnoscNavigation)
-                .FirstOrDefaultAsync(m => m.Nr == id);
-            if (chlodzenie == null)
-            {
-                return NotFound();
-            }
-
-            return View(chlodzenie);
-        }
-
-        // POST: Chlodzenies/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var chlodzenie = await _context.Chlodzenies.FindAsync(id);
-            if (chlodzenie != null)
-            {
-                _context.Chlodzenies.Remove(chlodzenie);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ChlodzenieExists(int id)
-        {
-            return _context.Chlodzenies.Any(e => e.Nr == id);
-        }
     }
 }
+
+

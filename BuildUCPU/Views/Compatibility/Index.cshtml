@@ -2,81 +2,382 @@
     ViewData["Title"] = "Kompatybilność";
 }
 
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kompatybilność</title>
-    <link rel="stylesheet" href="~/css/styles.css">
-    <style>
-        th, td {
-            text-align: left;
-            vertical-align: middle;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-collapse: collapse;
-        }
+<style>
 
-        table {
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .start-button {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .start-button-link {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .start-button-link:hover {
-            background-color: #45a049;
-        }
-
-        .selected-items-table th {
-            background-color: #f2f2f2;
-        }
-    </style>
-</head>
-<body>
-    <h2>Oto Twój skonfigurowany i gotowy komputer który składa sie z tych dobrze dobranych do siebie podzespołów:</h2>
-
-    @if (ViewBag.SelectedComponents != null && ViewBag.SelectedComponents.Length > 0)
-    {
-        <table class="selected-items-table">
-            <thead>
-                <tr>
-                    <th>Wybrane Podzespoły</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    var components = string.Join(",", ViewBag.SelectedComponents).Split(';');
-                }
-
-                @foreach (var component in components)
-                {
-                    if (!string.IsNullOrWhiteSpace(component))
-                    {
-                        <tr>
-                            <td>@Html.Raw(component.Trim())</td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
+    th, td {
+        text-align: left;
+        vertical-align: middle;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-collapse: collapse;
     }
 
-    <div class="start-button">
-        <a href="@Url.Action("Index", "Home")" class="start-button-link">Przejdź do strony głównej</a>
-    </div>
-</body>
-</html>
+    table {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    th {
+        cursor: pointer;
+    }
+
+    .content-container {
+        margin-top: 20px;
+    }
+
+    .alert {
+        padding: 15px;
+        margin: 10px 0;
+        border: 1px solid transparent;
+        border-radius: .25rem;
+    }
+
+    .alert-info {
+        color: #0c5460;
+        background-color: #d1ecf1;
+        border-color: #bee5eb;
+    }
+
+    .alert-success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+
+    .hidden-column {
+        display: none;
+    }
+
+    .sort-icon {
+        margin-left: 5px;
+    }
+
+    .return-link {
+        display: block;
+        text-decoration: none;
+        color: #fff;
+        background-color: #1861ac;
+        padding: 15px 25px;
+        margin: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s, transform 0.3s;
+        font-weight: bold;
+        text-align: center;
+    }
+
+        .return-link:hover {
+            background-color: #145098;
+            transform: scale(1.05);
+        }
+    /* Styl dla całej tabeli */
+    .table-custom {
+        border-collapse: collapse;
+        border-radius: 10px; /* Zaokrąglenie rogów tabeli */
+        overflow: hidden; /* Zapobieganie wyświetlaniu zawartości poza zaokrągleniami */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Opcjonalny cień dla lepszego wyglądu */
+    }
+
+        /* Styl dla nagłówka tabeli */
+        .table-custom th {
+            background-color: #4A90E2; /* Niebieski kolor */
+            color: white; /* Biały tekst */
+            padding: 10px; /* Odstęp wewnątrz nagłówka */
+            text-align: left; /* Wyśrodkowanie tekstu po lewej */
+        }
+
+        /* Styl dla komórek tabeli */
+        .table-custom td {
+            padding: 10px; /* Odstęp wewnątrz komórek */
+            border: 1px solid #ddd; /* Subtelne linie oddzielające komórki */
+        }
+
+        /* Styl dla obramowania tabeli */
+        .table-custom tr:nth-child(even) {
+            background-color: #f9f9f9; /* Subtelne kolorowanie dla lepszej czytelności */
+        }
+</style>
+<h2>Skomponuj swój własny zestaw</h2>
+<p>Na tej stronie sprawdzisz czy Twój skonfigurowany komputer jest kompatybilny</p>
+
+<a id="chlodzenia-button" href="javascript:void(0)">Chłodzenia</a>
+<div id="chlodzenia-container" class="container" style="display:none;"></div>
+
+<a id="dyskiTwarde-button" href="javascript:void(0)">Dyski Twarde</a>
+<div id="dyskiTwarde-container" class="container" style="display:none;"></div>
+
+<a id="kartyGraficzne-button" href="javascript:void(0)">Karty Graficzne</a>
+<div id="kartyGraficzne-container" class="container" style="display:none;"></div>
+
+<a id="obudowy-button" href="javascript:void(0)">Obudowy</a>
+<div id="obudowy-container" class="container" style="display:none;"></div>
+
+<a id="ramy-button" href="javascript:void(0)">RAM-y</a>
+<div id="ramy-container" class="container" style="display:none;"></div>
+
+<a id="plytyGlowne-button" href="javascript:void(0)">Płyty Główne</a>
+<div id="plytyGlowne-container" class="container" style="display:none;"></div>
+
+<a id="procesory-button" href="javascript:void(0)">Procesory</a>
+<div id="procesory-container" class="container" style="display:none;"></div>
+
+<a id="zasilacze-button" href="javascript:void(0)">Zasilacze</a>
+<div id="zasilacze-container" class="container" style="display:none;"></div>
+
+<div class="content-container">
+    <button id="check-button" style="display:none; margin-top: 20px;">Sprawdzam</button>
+    <div id="selected-items-container"></div>
+    <p id="compatibility-message" style="font-weight: bold; margin-top: 20px; display:none;"></p>
+    <button id="summary-button" style="display:none; margin-top: 20px;">Podsumuj</button>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var currentSortColumn = '';
+            var isAscending = true;
+
+            function sortTable(table, columnIndex, isNumeric) {
+                var rows = table.find('tbody tr').get();
+                rows.sort(function (a, b) {
+                    var A = $(a).children('td').eq(columnIndex).text();
+                    var B = $(b).children('td').eq(columnIndex).text();
+
+                    if (isNumeric) {
+                        A = parseFloat(A.replace('zł', '').replace(',', '.')) || 0;
+                        B = parseFloat(B.replace('zł', '').replace(',', '.')) || 0;
+                    }
+
+                    if (A < B) return isAscending ? -1 : 1;
+                    if (A > B) return isAscending ? 1 : -1;
+                    return 0;
+                });
+
+                $.each(rows, function (index, row) {
+                    table.children('tbody').append(row);
+                });
+            }
+
+            function updateSortIcons(table, columnIndex) {
+                table.find('th .sort-icon').remove();
+                var icon = isAscending ? '▲' : '▼';
+                table.find('th').eq(columnIndex).append(`<span class="sort-icon">${icon}</span>`);
+            }
+
+            $(document).on('click', 'th', function () {
+                var table = $(this).closest('table');
+                var columnIndex = $(this).index();
+                var isNumeric = $(this).text().toLowerCase() === 'cena';
+
+                if (currentSortColumn === columnIndex) {
+                    isAscending = !isAscending;
+                } else {
+                    currentSortColumn = columnIndex;
+                    isAscending = true;
+                }
+
+                sortTable(table, columnIndex, isNumeric);
+                updateSortIcons(table, columnIndex);
+            });
+
+            function loadTable(buttonId, containerId, url) {
+                $(buttonId).click(function () {
+                    if ($(containerId).is(':visible')) {
+                        $(containerId).slideUp();
+                    } else {
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            success: function (data) {
+                                var tempDiv = $('<div>').html(data);
+                                var table = tempDiv.find('table');
+
+                                if (table.length === 0) {
+                                    console.error("Brak tabeli w odpowiedzi AJAX.");
+                                    return;
+                                }
+
+                                var columnCount = table.find('thead tr th').length;
+                                if (columnCount < 9) {
+                                    alert("Dane wejściowe mają nieprawidłowy format.");
+                                    return;
+                                }
+
+                                table.find('thead tr').html(`
+                                            <th>Wybierz</th>
+                                            <th>Producent</th>
+                                            <th>Model</th>
+                                            <th>Cena</th>
+                                            <th class="hidden-column">ID</th>
+                                        `);
+
+                                table.find('tbody tr').each(function () {
+                                    var tds = $(this).find('td');
+                                    $(this).html(`
+                                                <td><input type="radio" name="component${buttonId}" class="row-radio" data-id="${tds.eq(8).html()}"></td>
+                                                <td>${tds.eq(0).html()}</td>
+                                                <td>${tds.eq(1).html()}</td>
+                                                <td>${tds.eq(2).html()} zł</td>
+                                                <td class="hidden-column">${tds.eq(8).html()}</td>
+                                            `);
+                                });
+
+                                $(containerId).html(table);
+                                $(containerId).slideDown();
+                                $('html, body').animate({
+                                    scrollTop: $(containerId).offset().top - 100
+                                }, 500);
+                            },
+                            error: function () {
+                                alert('Wystąpił problem podczas ładowania danych.');
+                            }
+                        });
+                    }
+                });
+            }
+
+            function checkRadioButtons() {
+                var selectedCount = $('input[type="radio"]:checked').length;
+                if (selectedCount === 8) {
+                    $('#check-button').show();
+                } else {
+                    $('#check-button').hide();
+                }
+            }
+
+            $(document).on('change', 'input[type="radio"]', function () {
+                checkRadioButtons();
+            });
+
+            $('#check-button').click(function () {
+                var selectedIds = [];
+                $('input[type="radio"]:checked').each(function () {
+                    var row = $(this).closest('tr');
+                    selectedIds.push(row.find('td').eq(4).text().trim());
+                });
+
+                if (selectedIds.length > 0) {
+                    var firstId = selectedIds[0];
+                    var allCompatible = selectedIds.every(function (id) {
+                        return id === firstId;
+                    });
+
+                    if (allCompatible) {
+                        $('#compatibility-message').text("Podzespoły są ze sobą kompatybilne").css("color", "green").show();
+                        $('#summary-button').show();
+                    } else {
+                        $('#compatibility-message').text("Podzespoły nie są ze sobą kompatybilne").css("color", "red").show();
+                    }
+                } else {
+                    alert("Nie wybrano żadnych podzespołów.");
+                }
+            });
+
+            $('#summary-button').click(function () {
+                var selectedRows = [];
+                $('input[type="radio"]:checked').each(function () {
+                    var row = $(this).closest('tr');
+                    selectedRows.push(row);
+                });
+
+                if (selectedRows.length === 8) {
+                    generateSummaryTable(selectedRows);
+                } else {
+                    alert("Musisz wybrać dokładnie 8 podzespołów.");
+                }
+            });
+            function generateSummaryTable(selectedRows) {
+                var summaryContainer = $('<div class="summary-container" style="margin-top: 20px; margin-bottom: 100px;"></div>');
+
+                // Obliczenie sumy
+                var totalCost = 0;
+                selectedRows.forEach(function (row) {
+                    var priceText = row.find('td').eq(3).text().trim();
+                    var price = parseFloat(priceText.replace('zł', '').replace(',', '.')) || 0;
+                    totalCost += price;
+                });
+
+                // Tworzenie HTML podsumowania
+                var tableHtml = `
+                        <h3>Podsumowanie Wybranych Podzespołów</h3>
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Producent</th>
+                                    <th>Model</th>
+                                    <th>Cena</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+
+                selectedRows.forEach(function (row) {
+                    var manufacturer = row.find('td').eq(1).text().trim();
+                    var model = row.find('td').eq(2).text().trim();
+                    var priceText = row.find('td').eq(3).text().trim();
+                    var price = parseFloat(priceText.replace('zł', '').replace(',', '.')) || 0;
+
+                    tableHtml += `
+                            <tr>
+                                <td>${manufacturer}</td>
+                                <td>${model}</td>
+                                <td>${price.toFixed(2)} zł</td>
+                            </tr>
+                        `;
+                });
+
+                tableHtml += `
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" style="text-align: right; font-weight: bold; padding: 8px;">Łączna cena:</td>
+                                    <td style="text-align: right; font-weight: bold; color:Green;; padding: 8px;">${totalCost.toFixed(2)} zł</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div style="margin-top: 20px;">
+                            <a href="/Home" class="return-link">Wróć do menu</a>
+                        </div>
+                    `;
+
+                // Dodanie 10x <br> po tabeli
+                tableHtml += `<div style="margin-top: 20px;">`;
+                for (var i = 0; i < 10; i++) {
+                    tableHtml += `<br>`;
+                }
+                tableHtml += `</div>`;
+
+                summaryContainer.html(tableHtml);
+
+                // Dodanie kontenera do DOM
+                $('#summary-container').remove();
+                $('body').append(summaryContainer);
+
+                $('html, body').animate({
+                    scrollTop: summaryContainer.offset().top - 100
+                }, 500);
+            };
+
+
+
+            loadTable('#chlodzenia-button', '#chlodzenia-container', '@Url.Action("Index", "Chlodzenies")');
+            loadTable('#dyskiTwarde-button', '#dyskiTwarde-container', '@Url.Action("Index", "DyskiTwardes")');
+            loadTable('#kartyGraficzne-button', '#kartyGraficzne-container', '@Url.Action("Index", "KartyGraficznes")');
+            loadTable('#obudowy-button', '#obudowy-container', '@Url.Action("Index", "Obudowies")');
+            loadTable('#ramy-button', '#ramy-container', '@Url.Action("Index", "PamieciRams")');
+            loadTable('#plytyGlowne-button', '#plytyGlowne-container', '@Url.Action("Index", "PlytyGlownes")');
+            loadTable('#procesory-button', '#procesory-container', '@Url.Action("Index", "Procesories")');
+            loadTable('#zasilacze-button', '#zasilacze-container', '@Url.Action("Index", "Zasilaczes")');
+        });
+
+    </script>
+
+}
+
+

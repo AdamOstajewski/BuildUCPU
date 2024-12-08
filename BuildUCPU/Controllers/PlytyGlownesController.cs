@@ -19,10 +19,69 @@ namespace BuildUCPU.Controllers
         }
 
         // GET: PlytyGlownes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            var builducpu1Context = _context.PlytyGlownes.Include(p => p.KompatybilnoscNavigation);
-            return View(await builducpu1Context.ToListAsync());
+            // Sortowanie dla kolumn
+            ViewData["ProducentSortParam"] = String.IsNullOrEmpty(sortOrder) ? "producent_desc" : "";
+            ViewData["ModelSortParam"] = sortOrder == "model" ? "model_desc" : "model";
+            ViewData["CenaSortParam"] = sortOrder == "cena" ? "cena_desc" : "cena";
+            ViewData["RozmiarSortParam"] = sortOrder == "rozmiar" ? "rozmiar_desc" : "rozmiar";
+            ViewData["KompatybilnoscSortParam"] = sortOrder == "kompatybilnosc" ? "kompatybilnosc_desc" : "kompatybilnosc";
+            ViewData["DostepnoscSortParam"] = sortOrder == "dostepnosc" ? "dostepnosc_desc" : "dostepnosc";
+            ViewData["GwarancjaSortParam"] = sortOrder == "gwarancja" ? "gwarancja_desc" : "gwarancja";
+            ViewData["FunkcjeSortParam"] = sortOrder == "funkcje" ? "funkcje_desc" : "funkcje";
+
+            var chlodzenia = from c in _context.PlytyGlownes.Include(c => c.KompatybilnoscNavigation)
+                             select c;
+
+            // Logika sortowania
+            switch (sortOrder)
+            {
+                case "producent_desc":
+                    chlodzenia = chlodzenia.OrderByDescending(c => c.Producent);
+                    break;
+                case "model":
+                    chlodzenia = chlodzenia.OrderBy(c => c.Model);
+                    break;
+                case "model_desc":
+                    chlodzenia = chlodzenia.OrderByDescending(c => c.Model);
+                    break;
+                case "cena":
+                    chlodzenia = chlodzenia.OrderBy(c => c.Cena);
+                    break;
+                case "cena_desc":
+                    chlodzenia = chlodzenia.OrderByDescending(c => c.Cena);
+                    break;
+                case "rozmiar":
+                    chlodzenia = chlodzenia.OrderBy(c => c.Rozmiar);
+                    break;
+                case "rozmiar_desc":
+                    chlodzenia = chlodzenia.OrderByDescending(c => c.Rozmiar);
+                    break;
+                case "dostepnosc":
+                    chlodzenia = chlodzenia.OrderBy(c => c.Dostepnosc);
+                    break;
+                case "dostepnosc_desc":
+                    chlodzenia = chlodzenia.OrderByDescending(c => c.Dostepnosc);
+                    break;
+                case "gwarancja":
+                    chlodzenia = chlodzenia.OrderBy(c => c.Gwarancja);
+                    break;
+                case "gwarancja_desc":
+                    chlodzenia = chlodzenia.OrderByDescending(c => c.Gwarancja);
+                    break;
+                case "funkcje":
+                    chlodzenia = chlodzenia.OrderBy(c => c.DodatkoweFunkcje);
+                    break;
+                case "funkcje_desc":
+                    chlodzenia = chlodzenia.OrderByDescending(c => c.DodatkoweFunkcje);
+                    break;
+                default:
+                    chlodzenia = chlodzenia.OrderBy(c => c.Producent);
+                    break;
+            }
+
+            return View(await chlodzenia.ToListAsync());
         }
 
         // GET: PlytyGlownes/Details/5

@@ -116,3 +116,26 @@ table {
         white-space: normal; /* Na mniejszych ekranach pozwalamy na zawijanie tekstu */
     }
 }
+
+button {
+    margin-left: 44%;
+    text-decoration: none;
+    display: inline-block;
+    background-color: #4A90E2;
+    color: #fff;
+    padding: 10px 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+    font-weight: bold;
+    border-color: #4A90E2;
+}
+
+    button:hover {
+        background-color: #357ABD;
+        transform: scale(1.05);
+    }
+
+    button:active {
+        transform: scale(0.98);
+    }

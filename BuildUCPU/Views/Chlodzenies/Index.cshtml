@@ -6,18 +6,56 @@
 
 <h1>Chłodzenia</h1>
 
-
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Producent)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ProducentSortParam"]" style="text-decoration: none;">
+                    @if (ViewData["ProducentSortParam"].ToString() == "producent_desc")
+
+                    {
+                        <span>▲</span> <!-- Ikona malejąco -->
+                    }
+
+                    else if (ViewData["ProducentSortParam"].ToString() == "")
+
+                    {
+                        <span>▼</span> <!-- Ikona rosnąco -->
+                    }
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Model)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ModelSortParam"]" style="text-decoration: none;">
+                    @if (ViewData["ModelSortParam"].ToString() == "model_desc")
+
+                    {
+                        <span>▲</span> <!-- Ikona malejąco -->
+                    }
+
+                    else if (ViewData["ModelSortParam"].ToString() == "model")
+
+                    {
+                        <span>▼</span> <!-- Ikona rosnąco -->
+                    }
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Cena)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["CenaSortParam"]" style="text-decoration: none;">
+                    @if (ViewData["CenaSortParam"].ToString() == "cena_desc")
+
+                    {
+                        <span>▲</span> <!-- Ikona malejąco -->
+                    }
+
+                    else if (ViewData["CenaSortParam"].ToString() == "cena")
+
+                    {
+                        <span>▼</span> <!-- Ikona rosnąco -->
+                    }
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Wydajnosc)
@@ -27,53 +65,76 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Dostepnosc)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DostepnoscSortParam"]" style="text-decoration: none;">
+                    @if (ViewData["DostepnoscSortParam"].ToString() == "dostepnosc_desc")
+
+                    {
+                        <span>▲</span> <!-- Ikona malejąco -->
+                    }
+
+                    else if (ViewData["DostepnoscSortParam"].ToString() == "dostepnosc")
+
+                    {
+                        <span>▼</span> <!-- Ikona rosnąco -->
+                    }
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Gwarancja)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["GwarancjaSortParam"]" style="text-decoration: none;">
+                    @if (ViewData["GwarancjaSortParam"].ToString() == "gwarancja_desc")
+
+                    {
+                        <span>▲</span> <!-- Ikona malejąco -->
+                    }
+
+                    else if (ViewData["GwarancjaSortParam"].ToString() == "gwarancja")
+
+                    {
+                        <span>▼</span> <!-- Ikona rosnąco -->
+                    }
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DodatkoweFunkcje)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["FunkcjeSortParam"]" style="text-decoration: none;">
+                    @if (ViewData["FunkcjeSortParam"].ToString() == "funkcje_desc")
+
+                    {
+                        <span>▲</span> <!-- Ikona malejąco -->
+                    }
+
+                    else if (ViewData["FunkcjeSortParam"].ToString() == "funkcje")
+
+                    {
+                        <span>▼</span> <!-- Ikona rosnąco -->
+                    }
+                </a>
             </th>
             <th style="display:none">
                 @Html.DisplayNameFor(model => model.KompatybilnoscNavigation.Id)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
+
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Producent)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Model)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cena)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Wydajnosc)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Kompatybilnosc)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Dostepnosc)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Gwarancja)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DodatkoweFunkcje)
-                </td>
-                <td style="display:none">
-                    @Html.DisplayFor(modelItem => item.KompatybilnoscNavigation.Id)
-                </td>
+                <td>@Html.DisplayFor(modelItem => item.Producent)</td>
+                <td>@Html.DisplayFor(modelItem => item.Model)</td>
+                <td>@Html.DisplayFor(modelItem => item.Cena)</td>
+                <td>@Html.DisplayFor(modelItem => item.Wydajnosc)</td>
+                <td>@Html.DisplayFor(modelItem => item.Kompatybilnosc)</td>
+                <td>@Html.DisplayFor(modelItem => item.Dostepnosc)</td>
+                <td>@Html.DisplayFor(modelItem => item.Gwarancja)</td>
+                <td>@Html.DisplayFor(modelItem => item.DodatkoweFunkcje)</td>
+                <td style="display:none">@Html.DisplayFor(modelItem => item.KompatybilnoscNavigation.Id)</td>
             </tr>
-}
+        }
     </tbody>
 </table>
 
 <a href="/Components">Powrót</a>
+
+

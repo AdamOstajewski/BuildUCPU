@@ -1,76 +1,53 @@
-﻿
+﻿/* Resetowanie marginesów i paddingu */
+body, h1, p {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-/* Główne okno kontaktowe */
+/* Stylowanie tła i tekstu */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #c9d6ff, #e2e2e2);
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Kontener główny */
 .contact-container {
-    margin: auto;
-    background: #ffffff;
+    max-width: 600px;
+    margin: 50px auto;
+    background: #fff;
     border-radius: 10px;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 30px;
-    width: 90%;
-    max-width: 500px;
-    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px 30px;
 }
 
+    /* Nagłówek */
     .contact-container h1 {
-        color: #333;
-        font-size: 24px;
-        margin-bottom: 10px;
-    }
-
-    .contact-container p {
-        font-size: 16px;
+        font-size: 2rem;
+        text-align: center;
+        color: #4a90e2;
         margin-bottom: 20px;
-        color: #666;
     }
 
-    /* Styl pola formularza */
-    .contact-container input, .contact-container textarea {
-        width: 100%;
-        padding: 10px;
-        margin: 8px 0;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 16px;
-        color: #333;
-    }
-
-    /* Styl przycisku wysyłania */
-    .contact-container button {
-        background: #f76c00;
-        color: #ffffff;
-        border: none;
-        padding: 12px 20px;
-        font-size: 16px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background 0.3s;
-    }
-
-        .contact-container button:hover {
-            background: #f76c00;
-        }
-
-/* Dodatkowe informacje kontaktowe */
-.contact-details {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #777;
+/* Informacje kontaktowe */
+.contact-info p {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+.contact-info a {
+    color: #f76c00;
+    text-decoration: none;
+    transition: color 0.3s;
 }
 
-    .contact-details p {
-        margin: 5px 0;
+    .contact-info a:hover {
+        color: #4a90e2;
     }
 
-    /* Styl linków kontaktowych */
-    .contact-details a {
-        color: #f76c00;
-        text-decoration: none;
-        transition: color 0.3s;
-    }
-
-        .contact-details a:hover {
-            color: #2575fc;
-        }
+/* Wyróżnienie kluczowych elementów */
+.contact-info strong {
+    color: #4a90e2;
+}
