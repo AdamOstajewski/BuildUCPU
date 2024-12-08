@@ -1,0 +1,75 @@
+﻿@model BuildUCPU.PamieciRam
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PamieciRam</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Producent)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Producent)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Model)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Model)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cena)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cena)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Wydajnosc)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Wydajnosc)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Kompatybilnosc)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Kompatybilnosc)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Dostepnosc)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Dostepnosc)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Gwarancja)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Gwarancja)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DodatkoweFunkcje)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DodatkoweFunkcje)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.KompatybilnoscNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.KompatybilnoscNavigation.Id)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Nr" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

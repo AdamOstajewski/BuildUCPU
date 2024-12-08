@@ -1,0 +1,101 @@
+﻿/* Resetowanie stylów */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Ogólne style */
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+}
+
+    nav .logo {
+        font-size: 1.5rem;
+        font-weight: 500;
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+    }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+            nav ul li a {
+                color: #fff;
+                text-decoration: none;
+                font-weight: 500;
+            }
+
+                nav ul li a:hover {
+                    text-decoration: underline;
+                }
+
+/* Główna sekcja */
+main {
+    width: 90%;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom:100px;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.about-section {
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin: 20px 0 10px;
+}
+
+.team {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.team-member {
+    text-align: center;
+}
+
+    .team-member img {
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    .team-member h3 {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+    }
+
+    .team-member p {
+        color: #666;
+        font-size: 0.9rem;
+    }
+

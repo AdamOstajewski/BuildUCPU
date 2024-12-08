@@ -1,0 +1,72 @@
+﻿@model BuildUCPU.GotoweZestawy
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>GotoweZestawy</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Sekcja)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Sekcja)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Chlodzenie)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Chlodzenie.Nr)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DyskiTwarde)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DyskiTwarde.Nr)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.KartyGraficzne)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.KartyGraficzne.Nr)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Obudowy)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Obudowy.Nr)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PamieciRam)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PamieciRam.Nr)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlytyGlowne)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlytyGlowne.Nr)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Procesory)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Procesory.Nr)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Zasilacze)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Zasilacze.Nr)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Nr">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

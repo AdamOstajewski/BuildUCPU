@@ -6,4 +6,43 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Views\Compatibility1Views\**" />
+    <Compile Remove="Views\Footer\**" />
+    <Content Remove="Views\Compatibility1Views\**" />
+    <Content Remove="Views\Footer\**" />
+    <EmbeddedResource Remove="Views\Compatibility1Views\**" />
+    <EmbeddedResource Remove="Views\Footer\**" />
+    <None Remove="Views\Compatibility1Views\**" />
+    <None Remove="Views\Footer\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Components\List.cshtml" />
+    <Content Remove="Views\News.cshtml" />
+    <Content Remove="Views\News\News.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\images\1.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.8.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.5" />
+    <PackageReference Include="MySql.EntityFrameworkCore" Version="8.0.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.2" />
+  </ItemGroup>
+
 </Project>

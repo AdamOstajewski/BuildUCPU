@@ -1,0 +1,153 @@
+﻿@{
+    ViewData["Title"] = "Porównanie podzespołów";
+}
+
+<style>
+    .comparison-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+    .comparison-column, .details-container {
+        width: 40%;
+        background-color: #0047AB;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .details-container {
+        margin-top: 20px;
+        background-color: #f8f9fa;
+        color: black;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 8px;
+        border: 1px solid #ddd;
+    }
+
+    .vs-text {
+        font-size: 30px;
+        font-weight: bold;
+        text-align: center;
+        margin: auto;
+    }
+
+    .hidden-column {
+        display: none;
+    }
+</style>
+
+<h2>Porównanie i kompatybilność podzespołów</h2>
+
+<div class="comparison-container">
+    <!-- Kolumna dla pierwszego podzespołu -->
+    <div class="comparison-column">
+        <label for="category1">Kategoria</label>
+        <select id="category1">
+            <option value="">Wybierz kategorię</option>
+        </select>
+
+        <table id="details1" class="details-container">
+            <!-- Szczegóły podzespołu zostaną załadowane tutaj -->
+        </table>
+    </div>
+
+    <div class="vs-text">VS</div>
+
+    <!-- Kolumna dla drugiego podzespołu -->
+    <div class="comparison-column">
+        <label for="category2">Kategoria</label>
+        <select id="category2">
+            <option value="">Wybierz kategorię</option>
+        </select>
+
+        <table id="details2" class="details-container">
+            <!-- Szczegóły podzespołu zostaną załadowane tutaj -->
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Funkcja ładowania tabeli dla wybranej kategorii
+            function loadTable(selector, containerId, url) {
+                $(selector).change(function () {
+                    const categoryId = $(this).val();
+                    if (categoryId) {
+                        $.ajax({
+                            url: url,
+                            type: 'GET',
+                            data: { categoryId: categoryId },
+                            success: function (data) {
+                                const tempDiv = $('<div>').html(data);
+                                const table = tempDiv.find('table');
+                                // Zmiana nagłówków tabeli
+                                table.find('thead tr').html(`
+                                    <th>Producent</th>
+                                    <th>Model</th>
+                                    <th>Cena</th>
+                                    <th class="hidden-column">ID</th>
+                                `);
+                                // Iteracja przez wiersze
+                                table.find('tbody tr').each(function () {
+                                    const tds = $(this).find('td');
+                                    $(this).html(`
+                                        <td>${tds.eq(0).html()}</td> <!-- Producent -->
+                                        <td>${tds.eq(1).html()}</td> <!-- Model -->
+                                        <td>${tds.eq(2).html()} zł</td> <!-- Cena -->
+                                        <td class="hidden-column">${tds.eq(3).html()}</td> <!-- Ukryte ID -->
+                                    `);
+                                });
+                                $(containerId).html(table).slideDown();
+                            },
+                            error: function () {
+                                alert('Wystąpił problem podczas ładowania danych.');
+                            }
+                        });
+                    } else {
+                        $(containerId).slideUp();
+                    }
+                });
+            }
+
+            // Ładowanie danych dla pierwszego i drugiego podzespołu
+            const categoryUrl = '@Url.Action("GetCategories", "Components")';
+            const componentsUrl = '@Url.Action("GetComponentsByCategory", "Components")';
+
+            // Inicjalizacja dla kolumn porównania
+            loadTable('#category1', '#details1', componentsUrl);
+            loadTable('#category2', '#details2', componentsUrl);
+
+            // Załaduj kategorie
+            $.ajax({
+                url: categoryUrl,
+                type: 'GET',
+                success: function (categories) {
+                    categories.forEach(category => {
+                        const option = `<option value="${category.Id}">${category.Name}</option>`;
+                        $('#category1').append(option);
+                        $('#category2').append(option);
+                    });
+                },
+                error: function () {
+                    alert('Wystąpił problem z załadowaniem kategorii.');
+                }
+            });
+        });
+    </script>
+}

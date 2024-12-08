@@ -8,7 +8,7 @@ a.navbar-brand {
 }
 
 a {
-  color: #0077cc;
+  color: white;
 }
 
 .btn-primary {
@@ -40,105 +40,9 @@ button.accept-policy {
 }
 
 .footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
   line-height: 60px;
-}
-
-/* Ustawienia globalne */
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Tło strony */
-.background-image {
-    position: absolute;
-    top: 90px; /* Pozycja od góry */
-    left: 0;
-    width: 100%;
-    height: 50vh;
-    background-image: url('/images/1.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    z-index: -1;
-}
-
-.navbar {
-    background-color: rgba(0, 86, 179, 1);
-}
-
-.navbar-brand {
-    color: white;
-    font-size: 42px;
-    font-weight: bold;
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: black;
-}
-
-.navbar-nav {
-    display: flex;
-    justify-content: center; /* Centralizacja elementów w poziomie */
-    align-items: center; /* Wyrównanie elementów w pionie */
-    height: 100%; /* Dla wyrównania pionowego */
-}
-
-    .navbar-nav .nav-item {
-        text-align: center; /* Centralizacja tekstu wewnątrz elementu */
-    }
-
-.nav-link {
-    color: white !important;
-    margin-right: 15px;
-}
-
-.nav-but1 {
-    display: flex;
-    flex-direction: column;
-}
-
-    .nav-but1 .nav-link {
-        background-color: rgba(253, 121, 0, 1);
-        color: white;
-        border: 1px solid #FD7900;
-        border-radius: 20px; /* Zwiększenie promienia zaokrąglenia */
-        padding: 10px 20px;
-        margin: 5px 0;
-        text-align: center;
-        transition: background-color 0.3s, color 0.3s;
-        width: 160px; /* Zwiększenie szerokości przycisku */
-        display: inline-block; /* Zapewnienie, że szerokość i padding działają poprawnie */
-    }
-
-        .nav-but1 .nav-link:hover {
-            background-color: rgba(253, 121, 0, 0.8);
-            color: white;
-        }
-
-/* Nowe style dla BuildU i CPU */
-.navbar-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-    .navbar-section .navbar-brand {
-        margin-bottom: 0;
-    }
-
-/* Ustawienia dla main i footer */
-.container {
-    flex: 1; /* Zajmuje dostępne miejsce */
-}
-
-footer {
-    position: relative;
-    bottom: 0;
-    width: 100%;
 }
